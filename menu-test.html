@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .menu-item { border: 1px solid #ccc; margin: 10px 0; padding: 10px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Menu API Test</h1>
+    <div id="status">Loading...</div>
+    <div id="menuItems"></div>
+
+    <script>
+        async function testMenuAPI() {  
+            const statusDiv = document.getElementById('status');
+            const menuDiv = document.getElementById('menuItems');
+            
+            try {
+                statusDiv.innerHTML = 'Fetching menu items...';
+                const response = await fetch('http://localhost:3000/api/menu');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.menuItems) {
+                    statusDiv.innerHTML = `<span class="success">Success! Found ${data.menuItems.length} menu items</span>`;
+                    
+                    data.menuItems.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'menu-item';
+                        itemDiv.innerHTML = `
+                            <h3>${item.name}</h3>
+                            <p><strong>Price:</strong> ₹${item.price}</p>
+                            <p><strong>Category ID:</strong> ${item.category_id}</p>
+                            <p><strong>Available:</strong> ${item.is_available ? 'Yes' : 'No'}</p>
+                            <p><strong>Vegetarian:</strong> ${item.is_vegetarian ? 'Yes' : 'No'}</p>
+                            <p><strong>Description:</strong> ${item.description || 'No description'}</p>
+                        `;
+                        menuDiv.appendChild(itemDiv);
+                    });
+                } else {
+                    statusDiv.innerHTML = `<span class="error">Error: ${data.message || 'Unknown error'}</span>`;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+                console.error('Error:', error);
+            }
+        }
+        
+        // Run test when page loads
+        testMenuAPI();
+    </script>
+</body>
+</html>

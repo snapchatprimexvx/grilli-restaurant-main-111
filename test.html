@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Menu Functionality</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-button { 
+            background: #ff6b35; 
+            color: white; 
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin: 10px;
+            font-size: 16px;
+        }
+        .test-button:hover { background: #e55a2b; }
+        .result { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            border-left: 4px solid #ff6b35;
+        }
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+        .success { border-left-color: #28a745; background: #d4edda; }
+    </style>
+</head>
+<body>
+    <h1>Menu Functionality Test</h1>
+    
+    <div>
+        <button class="test-button" onclick="testMenuItemDetails(28)">Test Menu Item 28 (Caesar Salad)</button>
+        <button class="test-button" onclick="testMenuItemDetails(30)">Test Menu Item 30 (Chicken Wings)</button>
+        <button class="test-button" onclick="testMenuItemDetails(31)">Test Menu Item 31 (Lasagne)</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script>
+        async function testMenuItemDetails(menuId) {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'result';
+            resultDiv.innerHTML = `<h3>Testing Menu Item ${menuId}</h3>`;
+            resultsDiv.appendChild(resultDiv);
+            
+            try {
+                console.log(`Testing menu item ${menuId}...`);
+                
+                // Test API call
+                const response = await fetch(`http://localhost:3000/api/menu/${menuId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML += `
+                        <p><strong>✅ API Call Successful</strong></p>
+                        <p><strong>Item Name:</strong> ${data.menuItem.name}</p>
+                        <p><strong>Price:</strong> $${data.menuItem.price}</p>
+                        <p><strong>Description:</strong> ${data.menuItem.description}</p>
+                        <p><strong>Available:</strong> ${data.menuItem.is_available ? 'Yes' : 'No'}</p>
+                    `;
+                } else {
+                    throw new Error(data.message || 'API call failed');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML += `
+                    <p><strong>❌ Error:</strong> ${error.message}</p>
+                    <p><strong>Details:</strong> ${error.toString()}</p>
+                `;
+            }
+        }
+        
+        // Test on page load
+        window.onload = function() {
+            console.log('Test page loaded');
+            testMenuItemDetails(28);
+        };
+    </script>
+</body>
+</html>

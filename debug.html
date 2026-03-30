@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug JavaScript Issues</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 8px; }
+        .error { background-color: #ffebee; border-color: #f44336; }
+        .success { background-color: #e8f5e8; border-color: #4caf50; }
+        .warning { background-color: #fff3e0; border-color: #ff9800; }
+        .test-button { 
+            background: #ff6b35; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 5px;
+        }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Script Loading Test</h2>
+        <button class="test-button" onclick="testScriptLoading()">Test Script Loading</button>
+        <div id="scriptLoadingResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Function Availability Test</h2>
+        <button class="test-button" onclick="testFunctionAvailability()">Test Function Availability</button>
+        <div id="functionAvailabilityResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. API Test</h2>
+        <button class="test-button" onclick="testAPI()">Test API Connection</button>
+        <div id="apiResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Menu Item Click Test</h2>
+        <button class="test-button" onclick="testMenuItemClick()">Test Menu Item Click Simulation</button>
+        <div id="menuClickResult"></div>
+    </div>
+
+    <script>
+        function testScriptLoading() {
+            const result = document.getElementById('scriptLoadingResult');
+            try {
+                // Test if basic script functions exist
+                if (typeof window.showMenuItemDetails === 'function') {
+                    result.innerHTML = '<div class="success">✅ Script loaded successfully - showMenuItemDetails function exists</div>';
+                } else {
+                    result.innerHTML = '<div class="error">❌ Script loading failed - showMenuItemDetails function not found</div>';
+                }
+            } catch (error) {
+                result.innerHTML = '<div class="error">❌ Script loading error: ' + error.message + '</div>';
+            }
+        }
+
+        function testFunctionAvailability() {
+            const result = document.getElementById('functionAvailabilityResult');
+            const functions = [
+                'showMenuItemDetails',
+                'closeMenuItemModal', 
+                'addToCartFromModal',
+                'showOrderForm',
+                'closeOrderFormModal',
+                'closeOrderConfirmationModal',
+                'addToCart',
+                'updateCartDisplay'
+            ];
+            
+            let html = '<h3>Function Status:</h3><pre>';
+            functions.forEach(funcName => {
+                const exists = typeof window[funcName] === 'function';
+                const status = exists ? '✅' : '❌';
+                html += `${status} ${funcName}: ${exists ? 'EXISTS' : 'NOT FOUND'}\n`;
+            });
+            html += '</pre>';
+            
+            result.innerHTML = html;
+        }
+
+        async function testAPI() {
+            const result = document.getElementById('apiResult');
+            try {
+                const response = await fetch('http://localhost:3000/api/menu');
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = '<div class="success">✅ API Connection successful - Menu item data loaded</div><pre>' + 
+                        JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    result.innerHTML = '<div class="error">❌ API returned error: ' + data.message + '</div>';
+                }
+            } catch (error) {
+                result.innerHTML = '<div class="error">❌ API Connection failed: ' + error.message + '</div>';
+            }
+        }
+
+        function testMenuItemClick() {
+            const result = document.getElementById('menuClickResult');
+            try {
+                // Try to call the function directly
+                if (typeof window.showMenuItemDetails === 'function') {
+                    window.showMenuItemDetails(29);
+                    result.innerHTML = '<div class="success">✅ Menu item click simulation successful</div>';
+                } else {
+                    result.innerHTML = '<div class="error">❌ showMenuItemDetails function not available for testing</div>';
+                }
+            } catch (error) {
+                result.innerHTML = '<div class="error">❌ Menu item click test failed: ' + error.message + '</div>';
+            }
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', function() {
+            console.log('Debug page loaded');
+            testScriptLoading();
+            testFunctionAvailability();
+            testAPI();
+        });
+    </script>
+
+    <!-- Load the actual script -->
+    <script src="./assets/js/menu-functions.js?v=1"></script>
+</body>
+</html>

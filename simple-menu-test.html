@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Menu Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .menu-item { 
+            border: 1px solid #ccc; 
+            padding: 15px; 
+            margin: 10px 0; 
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .menu-item h3 { margin: 0 0 10px 0; color: #333; }
+        .menu-item p { margin: 5px 0; color: #666; }
+        .price { font-weight: bold; color: #e74c3c; font-size: 18px; }
+        .btn { 
+            background: #3498db; 
+            color: white; 
+            padding: 8px 16px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover { background: #2980b9; }
+        .loading { color: #3498db; font-style: italic; }
+        .error { color: #e74c3c; }
+        .success { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <h1>🍽️ Simple Menu Test</h1>
+    
+    <div id="status" class="loading">Loading menu items...</div>
+    <div id="menuContainer"></div>
+    
+    <button onclick="loadMenu()" class="btn">🔄 Reload Menu</button>
+    
+    <script>
+        async function loadMenu() {
+            const status = document.getElementById('status');
+            const container = document.getElementById('menuContainer');
+            
+            status.innerHTML = '<div class="loading">🔄 Loading menu items...</div>';
+            container.innerHTML = '';
+            
+            try {
+                console.log('Fetching menu from API...');
+                const response = await fetch('http://localhost:3000/api/menu');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('API response:', data);
+                
+                if (data.success && data.menuItems && data.menuItems.length > 0) {
+                    status.innerHTML = `<div class="success">✅ Successfully loaded ${data.menuItems.length} menu items</div>`;
+                    
+                    let html = '';
+                    data.menuItems.forEach((item, index) => {
+                        html += `
+                            <div class="menu-item">
+                                <h3>${index + 1}. ${item.name}</h3>
+                                <p><strong>ID:</strong> ${item.id}</p>
+                                <p><strong>Category:</strong> ${item.category_name || 'Unknown'}</p>
+                                <p><strong>Description:</strong> ${item.description}</p>
+                                <p class="price">Price: $${item.price}</p>
+                                <button class="btn" onclick="orderItem('${item.name}', ${item.price})">
+                                    🛒 Order Now
+                                </button>
+                                <button class="btn" onclick="addToCart('${item.name}', ${item.price})">
+                                    ➕ Add to Cart
+                                </button>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                } else {
+                    throw new Error('No menu items received from server');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                status.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+                container.innerHTML = '';
+            }
+        }
+        
+        function orderItem(name, price) {
+            alert(`Order placed for ${name} - $${price}`);
+        }
+        
+        function addToCart(name, price) {
+            alert(`${name} added to cart - $${price}`);
+        }
+        
+        // Auto-load on page load
+        window.addEventListener('load', loadMenu);
+    </script>
+</body>
+</html>

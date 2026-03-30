@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .menu-item { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+        .error { color: red; }
+        .success { color: green; }
+        .loading { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Menu Loading Debug Test</h1>
+    
+    <div id="status">Loading...</div>
+    <div id="menuItems"></div>
+    
+    <button onclick="testMenuLoading()">Test Menu Loading</button>
+    
+    <script>
+        async function testMenuLoading() {
+            const status = document.getElementById('status');
+            const menuItems = document.getElementById('menuItems');
+            
+            status.innerHTML = '<div class="loading">Testing menu API...</div>';
+            
+            try {
+                console.log('Testing menu API...');
+                const response = await fetch('http://localhost:3000/api/menu');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('API response:', data);
+                
+                if (data.success && data.menuItems && data.menuItems.length > 0) {
+                    status.innerHTML = `<div class="success">✅ Successfully loaded ${data.menuItems.length} menu items</div>`;
+                    
+                    let html = '<h3>Menu Items:</h3>';
+                    data.menuItems.forEach((item, index) => {
+                        html += `
+                            <div class="menu-item">
+                                <strong>${index + 1}. ${item.name}</strong><br>
+                                <em>ID: ${item.id}</em><br>
+                                <em>Category: ${item.category_name || 'Unknown'}</em><br>
+                                <em>Price: $${item.price}</em><br>
+                                <em>Description: ${item.description}</em>
+                            </div>
+                        `;
+                    });
+                    menuItems.innerHTML = html;
+                } else {
+                    throw new Error('No menu items received from server');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                status.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+                menuItems.innerHTML = '';
+            }
+        }
+        
+        // Auto-test on page load
+        window.addEventListener('load', testMenuLoading);
+    </script>
+</body>
+</html>

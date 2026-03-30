@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Grilli Restaurant - Server Status</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container { 
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 30px; 
+            border-radius: 15px; 
+            backdrop-filter: blur(10px);
+        }
+        h1 { text-align: center; margin-bottom: 30px; }
+        .status { 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            font-weight: bold;
+        }
+        .success { background: rgba(46, 204, 113, 0.8); }
+        .error { background: rgba(231, 76, 60, 0.8); }
+        .warning { background: rgba(241, 196, 15, 0.8); }
+        .info { background: rgba(52, 152, 219, 0.8); }
+        button { 
+            background: #e74c3c; 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            margin: 10px 5px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 16px;
+        }
+        button:hover { background: #c0392b; }
+        .url-list { 
+            background: rgba(0, 0, 0, 0.2); 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0;
+        }
+        .url-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin: 10px 0; 
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        .url-item a { 
+            color: #3498db; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        .url-item a:hover { color: #2980b9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Grilli Restaurant - Server Diagnostic</h1>
+        
+        <div id="serverStatus">
+            <div class="status info">🔄 Checking server status...</div>
+        </div>
+
+        <div class="url-list">
+            <h3>📋 Available URLs:</h3>
+            
+            <div class="url-item">
+                <span>🏠 Main Website</span>
+                <a href="http://localhost:8000/index.html" target="_blank">Open</a>
+            </div>
+            
+            <div class="url-item">
+                <span>🔧 Admin Panel</span>
+                <a href="http://localhost:8000/admin.html" target="_blank">Open</a>
+            </div>
+            
+            <div class="url-item">
+                <span>🧪 Debug Test Page</span>
+                <a href="http://localhost:8000/test.html" target="_blank">Open</a>
+            </div>
+            
+            <div class="url-item">
+                <span>💻 This Diagnostic Page</span>
+                <a href="http://localhost:8000/diagnostic.html" target="_blank">Refresh</a>
+            </div>
+            
+            <div class="url-item">
+                <span>🔗 Backend API Health</span>
+                <a href="http://localhost:3000/health" target="_blank">Check</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="runDiagnostics()">🔄 Run Diagnostics</button>
+            <button onclick="clearBrowserCache()">🧹 Clear Cache Guide</button>
+            <button onclick="window.location.reload(true)">🔄 Hard Refresh</button>
+        </div>
+
+        <div id="diagnosticResults" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        const statusDiv = document.getElementById('serverStatus');
+        const resultsDiv = document.getElementById('diagnosticResults');
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            resultsDiv.appendChild(div);
+        }
+
+        function clearLogs() {
+            resultsDiv.innerHTML = '';
+        }
+
+        async function checkServer(url, name) {
+            try {
+                const response = await fetch(url);
+                const isHealthy = response.ok;
+                log(`${isHealthy ? '✅' : '❌'} ${name}: ${isHealthy ? 'Working' : 'Failed'} (${response.status})`, 
+                    isHealthy ? 'success' : 'error');
+                return isHealthy;
+            } catch (error) {
+                log(`❌ ${name}: Connection failed (${error.message})`, 'error');
+                return false;
+            }
+        }
+
+        async function runDiagnostics() {
+            clearLogs();
+            log('🔄 Running server diagnostics...', 'info');
+            
+            // Check backend
+            const backendHealthy = await checkServer('http://localhost:3000/health', 'Backend API');
+            
+            // Check frontend files
+            const frontendHealthy = await checkServer('http://localhost:8000/index.html', 'Frontend Server');
+            
+            // Check if we can access test files
+            const testPageHealthy = await checkServer('http://localhost:8000/test.html', 'Test Page');
+            
+            // Summary
+            if (backendHealthy && frontendHealthy) {
+                log('🎉 All servers are working! If you still see 404, clear your browser cache.', 'success');
+            } else {
+                log('⚠️ Some servers are not responding. Please restart the servers.', 'warning');
+            }
+        }
+
+        function clearBrowserCache() {
+            log('🧹 To clear browser cache:', 'warning');
+            log('• Chrome/Edge: Ctrl+Shift+Delete', 'info');
+            log('• Firefox: Ctrl+Shift+Delete', 'info');  
+            log('• Or open browser in Incognito/Private mode', 'info');
+            log('• Then try accessing the website again', 'info');
+        }
+
+        // Auto-run diagnostics on load
+        window.addEventListener('load', () => {
+            setTimeout(runDiagnostics, 1000);
+        });
+
+        // Update status message
+        statusDiv.innerHTML = '<div class="status success">✅ This diagnostic page is working! Servers are likely running.</div>';
+    </script>
+</body>
+</html>

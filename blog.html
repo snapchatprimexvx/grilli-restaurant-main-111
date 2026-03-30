@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grilli Blog - Culinary Stories & Recipes</title>
+  <meta name="description" content="Discover culinary secrets, chef tips, recipes, and stories from our kitchen. Stay updated with the latest in fine dining and food culture.">
+  
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <style>
+    /* Blog-specific styles */
+    .blog-hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('./assets/images/hero-slider-1.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 120px 0 80px;
+      text-align: center;
+      color: white;
+    }
+    
+    .blog-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .blog-header {
+      margin-bottom: 60px;
+    }
+    
+    .blog-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .blog-categories {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .category-chip {
+      padding: 8px 16px;
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .category-chip:hover,
+    .category-chip.active {
+      background: var(--smoky-black-1);
+      color: var(--gold-crayola);
+      transform: translateY(-2px);
+    }
+    
+    .blog-search-container {
+      position: relative;
+      max-width: 300px;
+    }
+    
+    .blog-search-input {
+      width: 100%;
+      padding: 12px 50px 12px 20px;
+      border: 2px solid var(--gold-crayola);
+      border-radius: 25px;
+      background: transparent;
+      color: var(--white);
+      font-size: 14px;
+    }
+    
+    .blog-search-input::placeholder {
+      color: var(--quick-silver);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--gold-crayola);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      background: var(--smoky-black-1);
+      color: var(--gold-crayola);
+    }
+    
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+    
+    .blog-card {
+      background: var(--smoky-black-3);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold-crayola);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    
+    .blog-card-image {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+    
+    .blog-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .blog-card:hover .blog-card-image img {
+      transform: scale(1.1);
+    }
+    
+    .blog-date {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .blog-category-tag {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+    }
+    
+    .blog-card-content {
+      padding: 25px;
+    }
+    
+    .blog-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 13px;
+      color: var(--quick-silver);
+    }
+    
+    .blog-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    
+    .blog-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .blog-title a:hover {
+      color: var(--gold-crayola);
+    }
+    
+    .blog-excerpt {
+      color: var(--quick-silver);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .blog-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .read-more {
+      color: var(--gold-crayola);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .read-more:hover {
+      gap: 10px;
+    }
+    
+    .blog-stats {
+      display: flex;
+      gap: 15px;
+      font-size: 13px;
+      color: var(--quick-silver);
+    }
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 60px 0;
+    }
+    
+    .pagination button {
+      padding: 10px 15px;
+      background: transparent;
+      border: 2px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .pagination button:hover,
+    .pagination button.active {
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+    
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      background: var(--smoky-black-3);
+      padding: 30px;
+      border-radius: 15px;
+      height: fit-content;
+    }
+    
+    .sidebar h3 {
+      color: var(--gold-crayola);
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    
+    .popular-posts {
+      list-style: none;
+    }
+    
+    .popular-post {
+      display: flex;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--smoky-black-1);
+    }
+    
+    .popular-post:last-child {
+      border-bottom: none;
+    }
+    
+    .popular-post-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    
+    .popular-post-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .popular-post-content h4 {
+      font-size: 14px;
+      color: var(--white);
+      margin-bottom: 5px;
+      line-height: 1.3;
+    }
+    
+    .popular-post-content h4 a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .popular-post-content h4 a:hover {
+      color: var(--gold-crayola);
+    }
+    
+    .popular-post-date {
+      font-size: 12px;
+      color: var(--quick-silver);
+    }
+    
+    @media (max-width: 768px) {
+      .blog-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .blog-categories {
+        justify-content: center;
+      }
+      
+      .blog-search-container {
+        max-width: none;
+      }
+      
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        position: static;
+        margin-top: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- Preloader -->
+  <div class="preload" data-preaload>
+    <div class="circle"></div>
+    <p class="text">Grilli</p>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+      </a>
+
+      <nav class="navbar" data-navbar>
+        <button class="close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+        </a>
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="index.html#home" class="navbar-link hover-underline">
+              <div class="separator"></div>
+              <span class="span">Home</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="index.html#menu" class="navbar-link hover-underline">
+              <div class="separator"></div>
+              <span class="span">Menus</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="index.html#about" class="navbar-link hover-underline">
+              <div class="separator"></div>
+              <span class="span">About Us</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="index.html#chefs" class="navbar-link hover-underline">
+              <div class="separator"></div>
+              <span class="span">Our Chefs</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="blog.html" class="navbar-link hover-underline active">
+              <div class="separator"></div>
+              <span class="span">Blog</span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="index.html#contact" class="navbar-link hover-underline">
+              <div class="separator"></div>
+              <span class="span">Contact</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <a href="index.html#reservation" class="btn btn-secondary">
+        <span class="text text-1">Find A Table</span>
+        <span class="text text-2" aria-hidden="true">Find A Table</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+      <div class="blog-container">
+        <h1 class="display-1">From Our Kitchen</h1>
+        <p class="hero-text">Culinary stories, chef secrets, and the art of fine dining</p>
+      </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="section" style="padding-top: 80px;">
+      <div class="blog-container">
+        <!-- Blog Navigation -->
+        <div class="blog-nav">
+          <div class="blog-categories">
+            <a href="#" class="category-chip active" data-category="all">All Posts</a>
+            <a href="#" class="category-chip" data-category="recipes">Recipes</a>
+            <a href="#" class="category-chip" data-category="sustainability">Sustainability</a>
+            <a href="#" class="category-chip" data-category="wine">Wine & Pairing</a>
+            <a href="#" class="category-chip" data-category="chef-tips">Chef Tips</a>
+            <a href="#" class="category-chip" data-category="culture">Food Culture</a>
+          </div>
+          
+          <div class="blog-search-container">
+            <input type="text" placeholder="Search posts..." class="blog-search-input" id="blogSearchInput">
+            <button class="search-btn" type="button">
+              <ion-icon name="search-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 50px; align-items: start;">
+          <!-- Main Blog Content -->
+          <div>
+            <!-- Featured Post -->
+            <article class="featured-post" style="margin-bottom: 60px;">
+              <div class="blog-card" style="background: var(--smoky-black-2); border: 2px solid var(--gold-crayola);">
+                <div class="blog-card-image" style="height: 300px;">
+                  <img src="./assets/images/event-1.jpg" alt="Featured post" loading="lazy">
+                  <div class="blog-date">Featured</div>
+                  <div class="blog-category-tag">Recipes</div>
+                </div>
+                <div class="blog-card-content">
+                  <div class="blog-meta">
+                    <span>By Chef Marco</span>
+                    <span>September 8, 2025</span>
+                    <span>8 min read</span>
+                  </div>
+                  <h2 class="blog-title">
+                    <a href="#">The Ultimate Guide to Handmade Pasta: From Dough to Perfection</a>
+                  </h2>
+                  <p class="blog-excerpt">
+                    Dive deep into the art of pasta making with our master chef's comprehensive guide. Learn traditional techniques passed down through generations, discover the secrets of perfect dough consistency, and master the art of creating restaurant-quality pasta at home.
+                  </p>
+                  <div class="blog-card-footer">
+                    <a href="#" class="read-more">
+                      Read Full Article
+                      <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </a>
+                    <div class="blog-stats">
+                      <span class="stat-item">
+                        <ion-icon name="heart-outline"></ion-icon>
+                        45
+                      </span>
+                      <span class="stat-item">
+                        <ion-icon name="chatbubble-outline"></ion-icon>
+                        12
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid" id="blogGrid">
+              <!-- Blog posts will be dynamically populated here -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+              <button type="button" disabled>
+                <ion-icon name="chevron-back-outline"></ion-icon>
+                Previous
+              </button>
+              <button type="button" class="active">1</button>
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button">
+                Next
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <!-- Popular Posts -->
+            <div class="widget">
+              <h3>Popular Posts</h3>
+              <ul class="popular-posts">
+                <li class="popular-post">
+                  <div class="popular-post-image">
+                    <img src="./assets/images/event-2.jpg" alt="Popular post" loading="lazy">
+                  </div>
+                  <div class="popular-post-content">
+                    <h4><a href="#">5 Essential Spices Every Chef Should Know</a></h4>
+                    <div class="popular-post-date">Sept 5, 2025</div>
+                  </div>
+                </li>
+                <li class="popular-post">
+                  <div class="popular-post-image">
+                    <img src="./assets/images/event-3.jpg" alt="Popular post" loading="lazy">
+                  </div>
+                  <div class="popular-post-content">
+                    <h4><a href="#">Wine Pairing 101: A Beginner's Guide</a></h4>
+                    <div class="popular-post-date">Sept 3, 2025</div>
+                  </div>
+                </li>
+                <li class="popular-post">
+                  <div class="popular-post-image">
+                    <img src="./assets/images/event-1.jpg" alt="Popular post" loading="lazy">
+                  </div>
+                  <div class="popular-post-content">
+                    <h4><a href="#">The Art of Plating: Visual Appeal Matters</a></h4>
+                    <div class="popular-post-date">Sept 1, 2025</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="widget" style="margin-top: 40px;">
+              <h3>Stay Updated</h3>
+              <p style="color: var(--quick-silver); margin-bottom: 20px;">
+                Get the latest recipes and culinary tips delivered to your inbox.
+              </p>
+              <form class="newsletter-form">
+                <input type="email" placeholder="Your email" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--gold-crayola); border-radius: 8px; background: transparent; color: var(--white);">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                  <span class="text">Subscribe</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Tags Cloud -->
+            <div class="widget" style="margin-top: 40px;">
+              <h3>Popular Tags</h3>
+              <div class="tags-cloud" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;">
+                <a href="#" style="padding: 5px 12px; background: var(--smoky-black-1); color: var(--gold-crayola); border-radius: 15px; text-decoration: none; font-size: 12px;">Italian</a>
+                <a href="#" style="padding: 5px 12px; background: var(--smoky-black-1); color: var(--gold-crayola); border-radius: 15px; text-decoration: none; font-size: 12px;">Pasta</a>
+                <a href="#" style="padding: 5px 12px; background: var(--smoky-black-1); color: var(--gold-crayola); border-radius: 15px; text-decoration: none; font-size: 12px;">Seafood</a>
+                <a href="#" style="padding: 5px 12px; background: var(--smoky-black-1); color: var(--gold-crayola); border-radius: 15px; text-decoration: none; font-size: 12px;">Organic</a>
+                <a href="#" style="padding: 5px 12px; background: var(--smoky-black-1); color: var(--gold-crayola); border-radius: 15px; text-decoration: none; font-size: 12px;">Wine</a>
+                <a href="#" style="padding: 5px 12px; background: var(--smoky-black-1); color: var(--gold-crayola); border-radius: 15px; text-decoration: none; font-size: 12px;">Dessert</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer section has-bg-image text-center" style="background-image: url('./assets/images/footer-bg.jpg')">
+    <div class="container">
+      <div class="footer-top grid-list">
+        <div class="footer-brand has-before has-after">
+          <a href="index.html" class="logo">
+            <img src="./assets/images/logo.svg" width="160" height="50" loading="lazy" alt="grilli home">
+          </a>
+          <address class="body-4">
+            Restaurant St, Delicious City, London 9578, UK
+          </address>
+          <a href="mailto:booking@grilli.com" class="body-4 contact-link">booking@grilli.com</a>
+          <a href="tel:+88123123456" class="body-4 contact-link">Booking Request : +88-123-123456</a>
+          <p class="body-4">Open : 09:00 am - 01:00 pm</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; 2025 Grilli. All Rights Reserved | Crafted by <a href="#" class="link">Restaurant Team</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <a href="#top" class="back-top-btn active" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <!-- Scripts -->
+  <script src="./assets/js/utils.js?v=1"></script>
+  <script src="./assets/js/api.js?v=1"></script>
+  <script src="./assets/js/script.js?v=1"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // Blog functionality
+    const blogPosts = [
+      {
+        id: 1,
+        title: "Mediterranean Flavors: A Journey Through Coastal Cuisine",
+        excerpt: "Explore the sun-soaked flavors of the Mediterranean with our chef's guide to coastal cooking techniques and traditional recipes.",
+        category: "recipes",
+        author: "Chef Sofia",
+        date: "September 7, 2025",
+        readTime: "6 min read",
+        image: "./assets/images/event-2.jpg",
+        likes: 32,
+        comments: 9
+      },
+      {
+        id: 2,
+        title: "Sustainable Dining: Our Zero-Waste Kitchen Initiative",
+        excerpt: "Learn how our restaurant is pioneering sustainable practices and how you can reduce food waste in your own kitchen.",
+        category: "sustainability",
+        author: "Chef Emma",
+        date: "September 6, 2025", 
+        readTime: "4 min read",
+        image: "./assets/images/event-3.jpg",
+        likes: 28,
+        comments: 15
+      },
+      {
+        id: 3,
+        title: "The Art of French Pastry: Mastering Classic Techniques",
+        excerpt: "Delve into the precise world of French pastry making with step-by-step guides to creating perfect croissants and éclairs.",
+        category: "chef-tips",
+        author: "Pastry Chef Henri",
+        date: "September 5, 2025",
+        readTime: "10 min read", 
+        image: "./assets/images/event-1.jpg",
+        likes: 41,
+        comments: 7
+      },
+      {
+        id: 4,
+        title: "Wine & Dine: Perfect Pairings for Autumn",
+        excerpt: "As autumn arrives, discover the perfect wine selections to complement seasonal dishes and enhance your dining experience.",
+        category: "wine",
+        author: "Sommelier Robert",
+        date: "September 4, 2025",
+        readTime: "7 min read",
+        image: "./assets/images/event-2.jpg", 
+        likes: 19,
+        comments: 11
+      },
+      {
+        id: 5,
+        title: "Farm-to-Fork: Building Relationships with Local Producers",
+        excerpt: "Meet the local farmers and producers who supply our kitchen with the freshest ingredients, and learn about our sourcing philosophy.",
+        category: "sustainability",
+        author: "Chef Michael",
+        date: "September 3, 2025",
+        readTime: "8 min read",
+        image: "./assets/images/event-3.jpg",
+        likes: 26,
+        comments: 13
+      },
+      {
+        id: 6,
+        title: "Spice Routes: Exploring Global Flavors in Modern Cuisine",
+        excerpt: "Take a culinary journey through different cultures and discover how traditional spices can transform contemporary dishes.",
+        category: "culture",
+        author: "Chef Priya",
+        date: "September 2, 2025",
+        readTime: "9 min read",
+        image: "./assets/images/event-1.jpg",
+        likes: 35,
+        comments: 8
+      }
+    ];
+
+    function renderBlogPosts(posts) {
+      const blogGrid = document.getElementById('blogGrid');
+      blogGrid.innerHTML = posts.map(post => `
+        <article class="blog-card" data-category="${post.category}">
+          <div class="blog-card-image">
+            <img src="${post.image}" alt="${post.title}" loading="lazy">
+            <div class="blog-date">${post.date.split(' ')[0]} ${post.date.split(' ')[1]}</div>
+            <div class="blog-category-tag">${post.category.charAt(0).toUpperCase() + post.category.slice(1)}</div>
+          </div>
+          <div class="blog-card-content">
+            <div class="blog-meta">
+              <span>By ${post.author}</span>
+              <span>${post.readTime}</span>
+            </div>
+            <h3 class="blog-title">
+              <a href="#">${post.title}</a>
+            </h3>
+            <p class="blog-excerpt">${post.excerpt}</p>
+            <div class="blog-card-footer">
+              <a href="#" class="read-more">
+                Read More
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </a>
+              <div class="blog-stats">
+                <span class="stat-item">
+                  <ion-icon name="heart-outline"></ion-icon>
+                  ${post.likes}
+                </span>
+                <span class="stat-item">
+                  <ion-icon name="chatbubble-outline"></ion-icon>
+                  ${post.comments}
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function filterPosts(category) {
+      const filteredPosts = category === 'all' ? blogPosts : blogPosts.filter(post => post.category === category);
+      renderBlogPosts(filteredPosts);
+      
+      // Update active category
+      document.querySelectorAll('.category-chip').forEach(chip => {
+        chip.classList.remove('active');
+      });
+      document.querySelector(`[data-category="${category}"]`).classList.add('active');
+    }
+
+    function searchPosts(query) {
+      const filteredPosts = blogPosts.filter(post => 
+        post.title.toLowerCase().includes(query.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+        post.category.toLowerCase().includes(query.toLowerCase())
+      );
+      renderBlogPosts(filteredPosts);
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      renderBlogPosts(blogPosts);
+      
+      // Category filtering
+      document.querySelectorAll('.category-chip').forEach(chip => {
+        chip.addEventListener('click', function(e) {
+          e.preventDefault();
+          const category = this.dataset.category;
+          filterPosts(category);
+        });
+      });
+      
+      // Search functionality
+      const searchInput = document.getElementById('blogSearchInput');
+      searchInput.addEventListener('input', function() {
+        searchPosts(this.value);
+      });
+      
+      // Newsletter form
+      document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (typeof window.showNotification === 'function') {
+          window.showNotification('Thank you for subscribing to our newsletter!', 'success');
+        }
+        this.reset();
+      });
+    });
+  </script>
+</body>
+</html>

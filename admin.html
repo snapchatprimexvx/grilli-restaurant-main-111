@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grilli Restaurant - Admin Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .main-content {
+            padding: 30px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .stat-card .card-body {
+            padding: 2rem;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-utensils me-2"></i>Grilli Admin Portal
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home me-1"></i>Back to Website
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3">
+                    <h5 class="text-center mb-4">
+                        <i class="fas fa-tachometer-alt me-2"></i>Admin Panel
+                    </h5>
+                    <nav class="nav flex-column">
+                        <a class="nav-link active" href="#" onclick="showSection('dashboard', this, event); return false;">
+                            <i class="fas fa-chart-pie me-2"></i>Dashboard
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('orders', this, event); return false;">
+                            <i class="fas fa-shopping-cart me-2"></i>Orders
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('menu', this, event); return false;">
+                            <i class="fas fa-book me-2"></i>Menu Management
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('reservations', this, event); return false;">
+                            <i class="fas fa-calendar-alt me-2"></i>Reservations
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('customers', this, event); return false;">
+                            <i class="fas fa-users me-2"></i>Customers
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('feedback', this, event); return false;">
+                            <i class="fas fa-star me-2"></i>Customer Feedback
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('activities', this, event); return false;">
+                            <i class="fas fa-chart-line me-2"></i>User Activities
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('reports', this, event); return false;">
+                            <i class="fas fa-chart-bar me-2"></i>Reports
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('settings', this, event); return false;">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="content-section active">
+                    <h2 class="mb-4">
+                        <i class="fas fa-chart-pie me-2"></i>Dashboard Overview
+                    </h2>
+                    
+                    <!-- Stats Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="totalOrders">0</div>
+                                    <div class="stat-label">Total Orders</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="totalRevenue">$0</div>
+                                    <div class="stat-label">Total Revenue</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="totalCustomers">0</div>
+                                    <div class="stat-label">Total Customers</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="pendingOrders">0</div>
+                                    <div class="stat-label">Pending Orders</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-line me-2"></i>Revenue Trend</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-doughnut me-2"></i>Order Status</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="orderStatusChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-clock me-2"></i>Recent Orders</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTable">
+                                        <tr>
+                                            <td colspan="5" class="text-center">No recent orders</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div id="orders" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>
+                            <i class="fas fa-shopping-cart me-2"></i>Order Management
+                        </h2>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary" onclick="refreshOrders()">
+                                <i class="fas fa-sync-alt me-1"></i>Refresh
+                            </button>
+                            <select class="form-select" id="orderStatusFilter" onchange="filterOrders()" style="width: auto;">
+                                <option value="all">All Orders</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="preparing">Preparing</option>
+                                <option value="ready">Ready</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Statistics -->
+                    <div class="row mb-4">
+                        <div class="col-md-2 mb-2">
+                            <div class="card text-center" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white;">
+                                <div class="card-body p-3">
+                                    <h6 class="mb-1" id="todayOrders">0</h6>
+                                    <small>Today</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="card text-center" style="background: linear-gradient(135deg, #4ecdc4, #36a2eb); color: white;">
+                                <div class="card-body p-3">
+                                    <h6 class="mb-1" id="pendingOrdersCount">0</h6>
+                                    <small>Pending</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="card text-center" style="background: linear-gradient(135deg, #feca57, #ff9ff3); color: white;">
+                                <div class="card-body p-3">
+                                    <h6 class="mb-1" id="preparingOrdersCount">0</h6>
+                                    <small>Preparing</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="card text-center" style="background: linear-gradient(135deg, #5f27cd, #341f97); color: white;">
+                                <div class="card-body p-3">
+                                    <h6 class="mb-1" id="readyOrdersCount">0</h6>
+                                    <small>Ready</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="card text-center" style="background: linear-gradient(135deg, #00d2d3, #54a0ff); color: white;">
+                                <div class="card-body p-3">
+                                    <h6 class="mb-1" id="deliveredOrdersCount">0</h6>
+                                    <small>Delivered</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <div class="card text-center" style="background: linear-gradient(135deg, #ff3838, #ff9500); color: white;">
+                                <div class="card-body p-3">
+                                    <h6 class="mb-1" id="todayRevenue">$0</h6>
+                                    <small>Revenue</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Order #</th>
+                                            <th>Customer</th>
+                                            <th>Items</th>
+                                            <th>Amount</th>
+                                            <th>Payment</th>
+                                            <th>Status</th>
+                                            <th>Time</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTable">
+                                        <tr>
+                                            <td colspan="8" class="text-center py-4">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="visually-hidden">Loading orders...</span>
+                                                </div>
+                                                <div class="mt-2">Loading orders...</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Section -->
+                <div id="menu" class="content-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>
+                            <i class="fas fa-book me-2"></i>Menu Management
+                        </h2>
+                        <button class="btn btn-primary" onclick="showAddMenuItemModal()">
+                            <i class="fas fa-plus me-1"></i>Add Menu Item
+                        </button>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Item Name</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="menuTable">
+                                        <tr>
+                                            <td colspan="6" class="text-center">Loading menu items...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reservations Section -->
+                <div id="reservations" class="content-section">
+                    <h2 class="mb-4">
+                        <i class="fas fa-calendar-alt me-2"></i>Reservation Management
+                    </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Reservation ID</th>
+                                            <th>Customer</th>
+                                            <th>Date & Time</th>
+                                            <th>Guests</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reservationsTable">
+                                        <tr>
+                                            <td colspan="6" class="text-center">No reservations found</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customers Section -->
+                <div id="customers" class="content-section">
+                    <h2 class="mb-4">
+                        <i class="fas fa-users me-2"></i>Customer Management
+                    </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Total Orders</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="customersTable">
+                                        <tr>
+                                            <td colspan="6" class="text-center">No customers found</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Section -->
+                <div id="feedback" class="content-section">
+                    <h2 class="mb-4">
+                        <i class="fas fa-star me-2"></i>Customer Feedback Management
+                    </h2>
+                    
+                    <!-- Feedback Stats -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="adminTotalReviews">0</div>
+                                    <div class="stat-label">Total Reviews</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="adminAverageRating">0.0</div>
+                                    <div class="stat-label">Average Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="adminRecommendationRate">0%</div>
+                                    <div class="stat-label">Recommendation Rate</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="stat-number" id="adminRecentReviews">0</div>
+                                    <div class="stat-label">Reviews This Week</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Filters -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <label class="form-label" for="ratingFilter">Filter by Rating:</label>
+                                    <select class="form-select" id="ratingFilter" name="ratingFilter" onchange="filterFeedback()">
+                                        <option value="all">All Ratings</option>
+                                        <option value="5">5 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="1">1 Star</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label" for="recommendationFilter">Filter by Recommendation:</label>
+                                    <select class="form-select" id="recommendationFilter" name="recommendationFilter" onchange="filterFeedback()">
+                                        <option value="all">All</option>
+                                        <option value="recommended">Recommended</option>
+                                        <option value="not-recommended">Not Recommended</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label" for="sortFilter">Sort by:</label>
+                                    <select class="form-select" id="sortFilter" name="sortFilter" onchange="filterFeedback()">
+                                        <option value="newest">Newest First</option>
+                                        <option value="oldest">Oldest First</option>
+                                        <option value="highest-rating">Highest Rating</option>
+                                        <option value="lowest-rating">Lowest Rating</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">&nbsp;</label>
+                                    <div>
+                                        <button class="btn btn-primary" onclick="exportFeedback()">
+                                            <i class="fas fa-download me-1"></i>Export Feedback
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback List -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer</th>
+                                            <th>Email</th>
+                                            <th>Ratings</th>
+                                            <th>Review</th>
+                                            <th>Date</th>
+                                            <th>Recommend</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="feedbackTable">
+                                        <tr>
+                                            <td colspan="7" class="text-center">Loading feedback...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Activities Section -->
+                <div id="activities" class="content-section">
+                    <h2 class="mb-4">
+                        <i class="fas fa-chart-line me-2"></i>User Activities & Login Data
+                    </h2>
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Recent User Activities</h5>
+                                    <button class="btn btn-primary btn-sm" onclick="refreshActivities()">
+                                        <i class="fas fa-sync-alt me-1"></i>Refresh
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="activitiesTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Action</th>
+                                                    <th>User Data</th>
+                                                    <th>Timestamp</th>
+                                                    <th>IP Address</th>
+                                                    <th>User Agent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="6" class="text-center">Loading activities...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Login Statistics</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="loginStats">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Total Logins Today:</span>
+                                            <strong id="todayLogins">0</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Active Users:</span>
+                                            <strong id="activeUsers">0</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Last Login:</span>
+                                            <strong id="lastLogin">-</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Security Alerts</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="securityAlerts">
+                                        <div class="alert alert-success">
+                                            <i class="fas fa-check-circle me-2"></i>All systems secure
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Section -->
+                <div id="reports" class="content-section">
+                    <h2 class="mb-4">
+                        <i class="fas fa-chart-bar me-2"></i>Reports & Analytics
+                    </h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Sales Report</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>Generate detailed sales reports for any date range.</p>
+                                    <button class="btn btn-primary">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Customer Analytics</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>View customer behavior and preferences.</p>
+                                    <button class="btn btn-primary">View Analytics</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings" class="content-section">
+                    <h2 class="mb-4">
+                        <i class="fas fa-cog me-2"></i>System Settings
+                    </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="restaurantName">Restaurant Name</label>
+                                            <input type="text" class="form-control" id="restaurantName" name="restaurantName" value="Grilli Restaurant" autocomplete="organization">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="restaurantAddress">Restaurant Address</label>
+                                            <input type="text" class="form-control" id="restaurantAddress" name="restaurantAddress" value="123 Food Street, City, State 12345" autocomplete="street-address">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="restaurantPhone">Phone Number</label>
+                                            <input type="tel" class="form-control" id="restaurantPhone" name="restaurantPhone" value="+1 (555) 123-4567" autocomplete="tel">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="restaurantEmail">Email</label>
+                                            <input type="email" class="form-control" id="restaurantEmail" name="restaurantEmail" value="info@grilli.com" autocomplete="email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Settings</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/utils.js?v=1"></script>
+    <script src="./assets/js/api.js?v=1"></script>
+    <script>
+        // Navigation functionality
+        function showSection(sectionId, linkEl, ev) {
+            try { if (ev && ev.preventDefault) ev.preventDefault(); } catch (e) {}
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            var target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
+            
+            // Add active class to clicked nav link
+            if (linkEl) linkEl.classList.add('active');
+            
+            // Load data for specific sections
+            if (sectionId === 'orders') {
+                loadAllOrders();
+            } else if (sectionId === 'reservations') {
+                loadAllReservations();
+            } else if (sectionId === 'feedback') {
+                loadFeedbackData();
+            } else if (sectionId === 'activities') {
+                loadUserActivities();
+            }
+        }
+
+        // Load user activities
+        async function loadUserActivities() {
+            try {
+                const response = await fetch('http://localhost:3000/api/auth/admin/activities');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayActivities(data.data.activities);
+                    updateLoginStats(data.data.activities);
+                } else {
+                    console.error('Failed to load activities:', data.message);
+                    // Show demo data
+                    displayActivities(getDemoActivities());
+                    updateLoginStats(getDemoActivities());
+                }
+            } catch (error) {
+                console.error('Error loading activities:', error);
+                // Show demo data
+                displayActivities(getDemoActivities());
+                updateLoginStats(getDemoActivities());
+            }
+        }
+
+        // Display activities in table
+        function displayActivities(activities) {
+            const tbody = document.querySelector('#activitiesTable tbody');
+            if (!tbody) return;
+            
+            if (activities.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">No activities found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = activities.map(activity => {
+                const data = typeof activity.data === 'string' ? JSON.parse(activity.data) : activity.data;
+                return `
+                    <tr>
+                        <td>${activity.id}</td>
+                        <td><span class="badge bg-primary">${activity.action}</span></td>
+                        <td>${data.email || data.userId || 'N/A'}</td>
+                        <td>${new Date(activity.timestamp).toLocaleString()}</td>
+                        <td>${activity.ip_address || 'N/A'}</td>
+                        <td class="text-truncate" style="max-width: 200px;" title="${activity.user_agent || 'N/A'}">
+                            ${activity.user_agent ? activity.user_agent.substring(0, 50) + '...' : 'N/A'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Update login statistics
+        function updateLoginStats(activities) {
+            const today = new Date().toDateString();
+            const todayLogins = activities.filter(activity => 
+                activity.action === 'login' && 
+                new Date(activity.timestamp).toDateString() === today
+            ).length;
+            
+            const uniqueUsers = new Set(activities.map(activity => {
+                const data = typeof activity.data === 'string' ? JSON.parse(activity.data) : activity.data;
+                return data.email || data.userId;
+            })).size;
+            
+            const lastLogin = activities
+                .filter(activity => activity.action === 'login')
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
+            
+            document.getElementById('todayLogins').textContent = todayLogins;
+            document.getElementById('activeUsers').textContent = uniqueUsers;
+            document.getElementById('lastLogin').textContent = lastLogin ? 
+                new Date(lastLogin.timestamp).toLocaleString() : 'No recent logins';
+        }
+
+        // Get demo activities for testing
+        function getDemoActivities() {
+            // Get real user data from localStorage if available
+            const realActivities = [];
+            const userActivities = JSON.parse(localStorage.getItem('userActivities') || '[]');
+            
+            // Add real activities from localStorage
+            userActivities.forEach(activity => {
+                realActivities.push({
+                    id: activity.id || Math.random(),
+                    action: activity.action,
+                    data: JSON.stringify(activity.data),
+                    timestamp: activity.timestamp,
+                    ip_address: '127.0.0.1',
+                    user_agent: navigator.userAgent
+                });
+            });
+            
+            // Add demo activities if no real ones
+            if (realActivities.length === 0) {
+                realActivities.push(
+                    {
+                        id: 1,
+                        action: 'login',
+                        data: JSON.stringify({ email: 'demo@grilli.com', userId: 1 }),
+                        timestamp: new Date().toISOString(),
+                        ip_address: '127.0.0.1',
+                        user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                    },
+                    {
+                        id: 2,
+                        action: 'demo_login',
+                        data: JSON.stringify({ email: 'demo@grilli.com', userId: 2, mode: 'demo' }),
+                        timestamp: new Date(Date.now() - 300000).toISOString(),
+                        ip_address: '127.0.0.1',
+                        user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                    }
+                );
+            }
+            
+            return realActivities;
+        }
+
+        // Refresh activities
+        function refreshActivities() {
+            loadUserActivities();
+        }
+
+        // Initialize dashboard data
+        async function initializeDashboard() {
+            // Check if admin is logged in
+            if (!localStorage.getItem('adminToken')) {
+                // Auto-login for demo purposes
+                await demoAdminLogin();
+            }
+            
+            // Load demo stats first
+            await loadDashboardStats();
+            
+            // Initialize charts
+            initializeCharts();
+            
+            // Load recent orders
+            await loadRecentOrders();
+        }
+
+        // Demo admin login for testing
+        async function demoAdminLogin() {
+            try {
+                const response = await fetch('http://localhost:3000/api/auth/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'admin123'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success && result.token) {
+                    localStorage.setItem('adminToken', result.token);
+                    console.log('Admin logged in successfully');
+                } else {
+                    console.log('Demo admin login failed, using demo mode');
+                    // Set a demo token for testing
+                    localStorage.setItem('adminToken', 'demo-admin-token');
+                }
+            } catch (error) {
+                console.log('Admin login error, using demo mode:', error);
+                // Set a demo token for testing
+                localStorage.setItem('adminToken', 'demo-admin-token');
+            }
+        }
+
+        function initializeCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [2000, 3000, 2500, 4000, 3500, 4500],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Order Status Chart
+            const statusCtx = document.getElementById('orderStatusChart').getContext('2d');
+            new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Pending', 'Preparing', 'Cancelled'],
+                    datasets: [{
+                        data: [45, 20, 25, 10],
+                        backgroundColor: ['#28a745', '#ffc107', '#17a2b8', '#dc3545']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        async function loadRecentOrders() {
+            const tableBody = document.getElementById('recentOrdersTable');
+            
+            try {
+                // Try to load real database orders first, fallback to demo
+                let response;
+                try {
+                    response = await grilliAPI.getAllOrders();
+                } catch (error) {
+                    console.log('Database orders not available, trying demo orders...');
+                    response = await grilliAPI.getDemoOrdersAdmin();
+                }
+                
+                if (response.success && response.orders && response.orders.length > 0) {
+                    // Get recent 5 orders
+                    const recentOrders = response.orders.slice(0, 5);
+                    
+                    tableBody.innerHTML = '';
+                    recentOrders.forEach(order => {
+                        const row = document.createElement('tr');
+                        const customerName = 'Website Customer'; // Database orders are from website
+                        const timeAgo = getTimeAgo(new Date(order.created_at));
+                        
+                        row.innerHTML = `
+                            <td>${order.order_number}</td>
+                            <td>${customerName}</td>
+                            <td>₹${order.total_amount}</td>
+                            <td><span class="badge bg-${getStatusColor(order.status)}">${order.status}</span></td>
+                            <td>${timeAgo}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No recent orders. Try placing an order from the main website!</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading recent orders:', error);
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Error loading orders</td></tr>';
+            }
+        }
+
+        // Load dashboard stats from real database orders
+        async function loadDashboardStats() {
+            try {
+                let response;
+                try {
+                    response = await grilliAPI.getAllOrders();
+                } catch (error) {
+                    console.log('Database orders not available, trying demo orders...');
+                    response = await grilliAPI.getDemoOrdersAdmin();
+                }
+                if (response.success && response.orders) {
+                    const orders = response.orders;
+                    const totalOrders = orders.length;
+                    const totalRevenue = orders.reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
+                    const pendingOrders = orders.filter(order => order.status === 'pending').length;
+                    const totalCustomers = orders.length; // Each order represents a customer for website orders
+                    
+                    document.getElementById('totalOrders').textContent = totalOrders;
+                    document.getElementById('totalRevenue').textContent = `₹${totalRevenue.toFixed(2)}`;
+                    document.getElementById('totalCustomers').textContent = totalCustomers;
+                    document.getElementById('pendingOrders').textContent = pendingOrders;
+                } else {
+                    // Fallback to default values
+                    document.getElementById('totalOrders').textContent = '0';
+                    document.getElementById('totalRevenue').textContent = '₹0';
+                    document.getElementById('totalCustomers').textContent = '0';
+                    document.getElementById('pendingOrders').textContent = '0';
+                }
+            } catch (error) {
+                console.error('Error loading dashboard stats:', error);
+                // Fallback to default values
+                document.getElementById('totalOrders').textContent = '0';
+                document.getElementById('totalRevenue').textContent = '₹0';
+                document.getElementById('totalCustomers').textContent = '0';
+                document.getElementById('pendingOrders').textContent = '0';
+            }
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'delivered': return 'success';
+                case 'preparing': return 'info';
+                case 'pending': return 'warning';
+                case 'cancelled': return 'danger';
+                case 'confirmed': return 'primary';
+                case 'ready': return 'success';
+                default: return 'secondary';
+            }
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} min ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            return `${Math.floor(diffInSeconds / 86400)} days ago`;
+        }
+
+        // Orders Management Functions
+        let allOrders = [];
+        let filteredOrders = [];
+        
+        async function loadAllOrders() {
+            const tableBody = document.getElementById('ordersTable');
+            
+            try {
+                // Show loading state
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading orders...</span>
+                            </div>
+                            <div class="mt-2">Loading orders...</div>
+                        </td>
+                    </tr>
+                `;
+                
+                // Load orders from API
+                const response = await grilliAPI.getAllOrders();
+                if (response.success && response.orders) {
+                    allOrders = response.orders;
+                    filteredOrders = [...allOrders];
+                    displayOrders();
+                    updateOrderStats();
+                } else {
+                    throw new Error(response.message || 'Failed to load orders');
+                }
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-4">
+                            <div class="text-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Error loading orders: ${error.message}
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm mt-2" onclick="loadAllOrders()">
+                                <i class="fas fa-sync-alt me-1"></i>Retry
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        function displayOrders() {
+            const tableBody = document.getElementById('ordersTable');
+            
+            if (filteredOrders.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="fas fa-shopping-cart me-2"></i>
+                                No orders found
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tableBody.innerHTML = '';
+            filteredOrders.forEach(order => {
+                const row = document.createElement('tr');
+                const customerName = order.first_name && order.last_name 
+                    ? `${order.first_name} ${order.last_name}` 
+                    : 'Guest Customer';
+                const orderDate = new Date(order.created_at).toLocaleString();
+                const itemsCount = Array.isArray(order.items) ? order.items.length : 0;
+                
+                row.innerHTML = `
+                    <td>
+                        <strong>${order.order_number}</strong>
+                        <br><small class="text-muted">${orderDate}</small>
+                    </td>
+                    <td>
+                        <div>${customerName}</div>
+                        <small class="text-muted">${order.email || 'No email'}</small>
+                    </td>
+                    <td>
+                        <span class="badge bg-info">${itemsCount} items</span>
+                        <button class="btn btn-sm btn-outline-primary ms-1" onclick="viewOrderDetails(${order.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <strong class="text-success">$${parseFloat(order.total_amount).toFixed(2)}</strong>
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary">${order.payment_method || 'Not specified'}</span>
+                        <br><small class="text-${order.payment_status === 'paid' ? 'success' : 'warning'}">
+                            ${order.payment_status || 'pending'}
+                        </small>
+                    </td>
+                    <td>
+                        <select class="form-select form-select-sm" onchange="updateOrderStatus(${order.id}, this.value)" 
+                                style="min-width: 120px;">
+                            <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                            <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
+                            <option value="ready" ${order.status === 'ready' ? 'selected' : ''}>Ready</option>
+                            <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                            <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                    <td>${getTimeAgo(new Date(order.created_at))}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-outline-info" onclick="viewOrderDetails(${order.id})" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="printOrder(${order.id})" title="Print">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        function updateOrderStats() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const todayOrders = allOrders.filter(order => {
+                const orderDate = new Date(order.created_at);
+                orderDate.setHours(0, 0, 0, 0);
+                return orderDate.getTime() === today.getTime();
+            });
+            
+            const todayRevenue = todayOrders.reduce((sum, order) => sum + parseFloat(order.total_amount), 0);
+            
+            document.getElementById('todayOrders').textContent = todayOrders.length;
+            document.getElementById('todayRevenue').textContent = `$${todayRevenue.toFixed(2)}`;
+            document.getElementById('pendingOrdersCount').textContent = allOrders.filter(o => o.status === 'pending').length;
+            document.getElementById('preparingOrdersCount').textContent = allOrders.filter(o => o.status === 'preparing').length;
+            document.getElementById('readyOrdersCount').textContent = allOrders.filter(o => o.status === 'ready').length;
+            document.getElementById('deliveredOrdersCount').textContent = allOrders.filter(o => o.status === 'delivered').length;
+        }
+        
+        function filterOrders() {
+            const statusFilter = document.getElementById('orderStatusFilter').value;
+            
+            if (statusFilter === 'all') {
+                filteredOrders = [...allOrders];
+            } else {
+                filteredOrders = allOrders.filter(order => order.status === statusFilter);
+            }
+            
+            displayOrders();
+        }
+        
+        function refreshOrders() {
+            loadAllOrders();
+        }
+        
+        async function updateOrderStatus(orderId, newStatus) {
+            try {
+                const response = await grilliAPI.updateOrderStatus(orderId, newStatus);
+                if (response.success) {
+                    // Update local data
+                    const orderIndex = allOrders.findIndex(order => order.id === orderId);
+                    if (orderIndex !== -1) {
+                        allOrders[orderIndex].status = newStatus;
+                        
+                        // Update filtered orders if exists
+                        const filteredIndex = filteredOrders.findIndex(order => order.id === orderId);
+                        if (filteredIndex !== -1) {
+                            filteredOrders[filteredIndex].status = newStatus;
+                        }
+                    }
+                    
+                    updateOrderStats();
+                    showNotification(`Order status updated to ${newStatus}`, 'success');
+                } else {
+                    throw new Error(response.message || 'Failed to update order status');
+                }
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                showNotification('Failed to update order status', 'error');
+                // Reload orders to restore correct status
+                loadAllOrders();
+            }
+        }
+        
+        function viewOrderDetails(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) {
+                showNotification('Order not found', 'error');
+                return;
+            }
+            
+            const customerName = order.first_name && order.last_name 
+                ? `${order.first_name} ${order.last_name}` 
+                : 'Guest Customer';
+            
+            let itemsHtml = '<div class="alert alert-info">No items found</div>';
+            if (Array.isArray(order.items) && order.items.length > 0) {
+                itemsHtml = order.items.map(item => `
+                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                        <div>
+                            <strong>${item.menu_item_name || 'Unknown Item'}</strong>
+                            <br><small class="text-muted">Qty: ${item.quantity} × $${parseFloat(item.unit_price).toFixed(2)}</small>
+                            ${item.special_instructions ? `<br><small class="text-info"><i class="fas fa-info-circle"></i> ${item.special_instructions}</small>` : ''}
+                        </div>
+                        <div class="text-end">
+                            <strong>$${parseFloat(item.total_price).toFixed(2)}</strong>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Create modal
+            const modalHtml = `
+                <div class="modal fade" id="orderDetailsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Order Details - ${order.order_number}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Customer Information</h6>
+                                        <p><strong>Name:</strong> ${customerName}<br>
+                                        <strong>Email:</strong> ${order.email || 'N/A'}<br>
+                                        <strong>Phone:</strong> ${order.phone || 'N/A'}</p>
+                                        
+                                        <h6 class="mt-3">Order Information</h6>
+                                        <p><strong>Order Number:</strong> ${order.order_number}<br>
+                                        <strong>Date:</strong> ${new Date(order.created_at).toLocaleString()}<br>
+                                        <strong>Status:</strong> <span class="badge bg-${getStatusColor(order.status)}">${order.status}</span><br>
+                                        <strong>Payment Method:</strong> ${order.payment_method || 'N/A'}<br>
+                                        <strong>Payment Status:</strong> <span class="text-${order.payment_status === 'paid' ? 'success' : 'warning'}">${order.payment_status || 'pending'}</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Table Number</h6>
+                                        <p>${order.delivery_address || 'No table number specified'}</p>
+                                        
+                                        ${order.special_instructions ? `
+                                        <h6>Special Instructions</h6>
+                                        <p class="text-info">${order.special_instructions}</p>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                
+                                <h6 class="mt-4">Order Items</h6>
+                                <div class="border rounded p-3">
+                                    ${itemsHtml}
+                                    <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                        <strong>Total Amount:</strong>
+                                        <strong class="text-success fs-5">$${parseFloat(order.total_amount).toFixed(2)}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="printOrder(${order.id})">
+                                    <i class="fas fa-print me-1"></i>Print Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('orderDetailsModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
+            modal.show();
+        }
+        
+        function printOrder(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) {
+                showNotification('Order not found', 'error');
+                return;
+            }
+            
+            // Create print-friendly content
+            const printWindow = window.open('', '_blank');
+            const customerName = order.first_name && order.last_name 
+                ? `${order.first_name} ${order.last_name}` 
+                : 'Guest Customer';
+            
+            let itemsHtml = '<p>No items found</p>';
+            if (Array.isArray(order.items) && order.items.length > 0) {
+                itemsHtml = order.items.map(item => `
+                    <tr>
+                        <td>${item.menu_item_name || 'Unknown Item'}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${parseFloat(item.unit_price).toFixed(2)}</td>
+                        <td>$${parseFloat(item.total_price).toFixed(2)}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Order ${order.order_number} - Grilli Restaurant</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; }
+                            .info { margin: 20px 0; }
+                            .info div { margin: 5px 0; }
+                            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f5f5f5; }
+                            .total { font-weight: bold; font-size: 1.2em; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <h1>🍽️ Grilli Restaurant</h1>
+                            <h2>Order Receipt</h2>
+                        </div>
+                        
+                        <div class="info">
+                            <div><strong>Order Number:</strong> ${order.order_number}</div>
+                            <div><strong>Date:</strong> ${new Date(order.created_at).toLocaleString()}</div>
+                            <div><strong>Customer:</strong> ${customerName}</div>
+                            <div><strong>Status:</strong> ${order.status}</div>
+                            <div><strong>Payment:</strong> ${order.payment_method || 'N/A'} (${order.payment_status || 'pending'})</div>
+                            ${order.delivery_address ? `<div><strong>Table Number:</strong> ${order.delivery_address}</div>` : ''}
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${itemsHtml}
+                            </tbody>
+                            <tfoot>
+                                <tr class="total">
+                                    <td colspan="3">Total Amount:</td>
+                                    <td>$${parseFloat(order.total_amount).toFixed(2)}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        
+                        ${order.special_instructions ? `<div class="info"><strong>Special Instructions:</strong> ${order.special_instructions}</div>` : ''}
+                        
+                        <div style="text-align: center; margin-top: 30px; font-size: 0.9em; color: #666;">
+                            Thank you for dining with us!<br>
+                            Visit us at: www.grillirestaurant.com
+                        </div>
+                    </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
+
+        // Feedback Management Functions
+        let adminFeedbackData = [];
+
+        function loadFeedbackData() {
+            // Load feedback data from localStorage (same as main website)
+            adminFeedbackData = JSON.parse(localStorage.getItem('restaurantFeedback')) || [];
+            updateAdminFeedbackStats();
+            displayFeedbackTable();
+        }
+
+        function updateAdminFeedbackStats() {
+            const total = adminFeedbackData.length;
+            document.getElementById('adminTotalReviews').textContent = total;
+            
+            if (total === 0) {
+                document.getElementById('adminAverageRating').textContent = '0.0';
+                document.getElementById('adminRecommendationRate').textContent = '0%';
+                document.getElementById('adminRecentReviews').textContent = '0';
+                return;
+            }
+            
+            // Calculate average rating
+            const totalRating = adminFeedbackData.reduce((sum, feedback) => {
+                return sum + (feedback.ratings.food + feedback.ratings.service + feedback.ratings.ambiance) / 3;
+            }, 0);
+            
+            const avgRating = (totalRating / total).toFixed(1);
+            document.getElementById('adminAverageRating').textContent = avgRating;
+            
+            // Calculate recommendation rate
+            const recommendations = adminFeedbackData.filter(feedback => feedback.recommend).length;
+            const recRate = Math.round((recommendations / total) * 100);
+            document.getElementById('adminRecommendationRate').textContent = `${recRate}%`;
+            
+            // Calculate recent reviews (this week)
+            const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            const recentReviews = adminFeedbackData.filter(feedback => 
+                new Date(feedback.date) > oneWeekAgo
+            ).length;
+            document.getElementById('adminRecentReviews').textContent = recentReviews;
+        }
+
+        function displayFeedbackTable() {
+            const tableBody = document.getElementById('feedbackTable');
+            
+            if (adminFeedbackData.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No feedback available</td></tr>';
+                return;
+            }
+            
+            let filteredData = [...adminFeedbackData];
+            
+            // Apply filters
+            const ratingFilter = document.getElementById('ratingFilter').value;
+            const recommendationFilter = document.getElementById('recommendationFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+            
+            // Filter by rating
+            if (ratingFilter !== 'all') {
+                const targetRating = parseInt(ratingFilter);
+                filteredData = filteredData.filter(feedback => {
+                    const avgRating = (feedback.ratings.food + feedback.ratings.service + feedback.ratings.ambiance) / 3;
+                    return Math.round(avgRating) === targetRating;
+                });
+            }
+            
+            // Filter by recommendation
+            if (recommendationFilter === 'recommended') {
+                filteredData = filteredData.filter(feedback => feedback.recommend);
+            } else if (recommendationFilter === 'not-recommended') {
+                filteredData = filteredData.filter(feedback => !feedback.recommend);
+            }
+            
+            // Sort data
+            switch (sortFilter) {
+                case 'newest':
+                    filteredData.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'oldest':
+                    filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    break;
+                case 'highest-rating':
+                    filteredData.sort((a, b) => {
+                        const avgA = (a.ratings.food + a.ratings.service + a.ratings.ambiance) / 3;
+                        const avgB = (b.ratings.food + b.ratings.service + b.ratings.ambiance) / 3;
+                        return avgB - avgA;
+                    });
+                    break;
+                case 'lowest-rating':
+                    filteredData.sort((a, b) => {
+                        const avgA = (a.ratings.food + a.ratings.service + a.ratings.ambiance) / 3;
+                        const avgB = (b.ratings.food + b.ratings.service + b.ratings.ambiance) / 3;
+                        return avgA - avgB;
+                    });
+                    break;
+            }
+            
+            tableBody.innerHTML = '';
+            filteredData.forEach(feedback => {
+                const date = new Date(feedback.date).toLocaleDateString();
+                const avgRating = ((feedback.ratings.food + feedback.ratings.service + feedback.ratings.ambiance) / 3).toFixed(1);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <strong>${feedback.customerName}</strong>
+                    </td>
+                    <td>${feedback.customerEmail}</td>
+                    <td>
+                        <div class="mb-1">
+                            <small>Food: ${'★'.repeat(feedback.ratings.food)}${'☆'.repeat(5 - feedback.ratings.food)}</small>
+                        </div>
+                        <div class="mb-1">
+                            <small>Service: ${'★'.repeat(feedback.ratings.service)}${'☆'.repeat(5 - feedback.ratings.service)}</small>
+                        </div>
+                        <div>
+                            <small>Ambiance: ${'★'.repeat(feedback.ratings.ambiance)}${'☆'.repeat(5 - feedback.ratings.ambiance)}</small>
+                        </div>
+                        <div class="mt-1">
+                            <strong>Avg: ${avgRating}/5</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
+                            ${feedback.feedbackText}
+                        </div>
+                    </td>
+                    <td>${date}</td>
+                    <td>
+                        <span class="badge ${feedback.recommend ? 'bg-success' : 'bg-warning'}">
+                            ${feedback.recommend ? 'Yes' : 'No'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewFeedbackDetails(${feedback.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteFeedback(${feedback.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function filterFeedback() {
+            displayFeedbackTable();
+        }
+
+        function viewFeedbackDetails(feedbackId) {
+            const feedback = adminFeedbackData.find(f => f.id === feedbackId);
+            if (!feedback) return;
+            
+            const avgRating = ((feedback.ratings.food + feedback.ratings.service + feedback.ratings.ambiance) / 3).toFixed(1);
+            const date = new Date(feedback.date).toLocaleString();
+            
+            const modal = `
+                <div class="modal fade" id="feedbackModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Feedback Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Customer Information</h6>
+                                        <p><strong>Name:</strong> ${feedback.customerName}</p>
+                                        <p><strong>Email:</strong> ${feedback.customerEmail}</p>
+                                        <p><strong>Date:</strong> ${date}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Ratings</h6>
+                                        <p><strong>Food Quality:</strong> ${'★'.repeat(feedback.ratings.food)}${'☆'.repeat(5 - feedback.ratings.food)} (${feedback.ratings.food}/5)</p>
+                                        <p><strong>Service Quality:</strong> ${'★'.repeat(feedback.ratings.service)}${'☆'.repeat(5 - feedback.ratings.service)} (${feedback.ratings.service}/5)</p>
+                                        <p><strong>Ambiance:</strong> ${'★'.repeat(feedback.ratings.ambiance)}${'☆'.repeat(5 - feedback.ratings.ambiance)} (${feedback.ratings.ambiance}/5)</p>
+                                        <p><strong>Average Rating:</strong> ${avgRating}/5</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h6>Review</h6>
+                                <p>${feedback.feedbackText}</p>
+                                <hr>
+                                <p><strong>Would Recommend:</strong> 
+                                    <span class="badge ${feedback.recommend ? 'bg-success' : 'bg-warning'}">
+                                        ${feedback.recommend ? 'Yes' : 'No'}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('feedbackModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modal);
+            
+            // Show modal
+            const feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+            feedbackModal.show();
+        }
+
+        function deleteFeedback(feedbackId) {
+            if (confirm('Are you sure you want to delete this feedback?')) {
+                adminFeedbackData = adminFeedbackData.filter(f => f.id !== feedbackId);
+                localStorage.setItem('restaurantFeedback', JSON.stringify(adminFeedbackData));
+                updateAdminFeedbackStats();
+                displayFeedbackTable();
+                alert('Feedback deleted successfully!');
+            }
+        }
+
+        function exportFeedback() {
+            if (adminFeedbackData.length === 0) {
+                alert('No feedback data to export!');
+                return;
+            }
+            
+            const csvContent = [
+                ['Customer Name', 'Email', 'Food Rating', 'Service Rating', 'Ambiance Rating', 'Average Rating', 'Review', 'Recommend', 'Date'],
+                ...adminFeedbackData.map(feedback => {
+                    const avgRating = ((feedback.ratings.food + feedback.ratings.service + feedback.ratings.ambiance) / 3).toFixed(1);
+                    return [
+                        feedback.customerName,
+                        feedback.customerEmail,
+                        feedback.ratings.food,
+                        feedback.ratings.service,
+                        feedback.ratings.ambiance,
+                        avgRating,
+                        `"${feedback.feedbackText.replace(/"/g, '""')}"`,
+                        feedback.recommend ? 'Yes' : 'No',
+                        new Date(feedback.date).toLocaleDateString()
+                    ];
+                })
+            ].map(row => row.join(',')).join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `restaurant-feedback-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Load all reservations for reservations section
+        async function loadAllReservations() {
+            const tableBody = document.getElementById('reservationsTable');
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/reservations/admin/all', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('adminToken')
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success && result.data.reservations && result.data.reservations.length > 0) {
+                    tableBody.innerHTML = '';
+                    result.data.reservations.forEach(reservation => {
+                        const row = document.createElement('tr');
+                        const reservationDate = new Date(reservation.date).toLocaleDateString();
+                        const reservationTime = new Date('2000-01-01T' + reservation.time).toLocaleTimeString('en-US', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                        });
+                        const createdDate = new Date(reservation.created_at).toLocaleString();
+                        
+                        row.innerHTML = `
+                            <td>
+                                <strong>#${reservation.id}</strong><br>
+                                <small class="text-muted">${createdDate}</small>
+                            </td>
+                            <td>
+                                <strong>${reservation.name}</strong><br>
+                                <small class="text-muted">${reservation.email}</small><br>
+                                <small class="text-muted">${reservation.phone}</small>
+                            </td>
+                            <td>
+                                <strong>${reservationDate}</strong><br>
+                                <small class="text-muted">${reservationTime}</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-info">${reservation.party_size} people</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-${getReservationStatusColor(reservation.status)}">${reservation.status}</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="viewReservationDetails(${reservation.id})" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-success me-1" onclick="updateReservationStatus(${reservation.id}, 'confirmed')" title="Confirm">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-warning me-1" onclick="updateReservationStatus(${reservation.id}, 'completed')" title="Complete">
+                                    <i class="fas fa-check-double"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="updateReservationStatus(${reservation.id}, 'cancelled')" title="Cancel">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No reservations found. Try making a reservation from the main website!</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading reservations:', error);
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center">Error loading reservations. Make sure the backend server is running.</td></tr>';
+            }
+        }
+
+        // Get reservation status color
+        function getReservationStatusColor(status) {
+            switch(status) {
+                case 'pending': return 'warning';
+                case 'confirmed': return 'success';
+                case 'completed': return 'info';
+                case 'cancelled': return 'danger';
+                default: return 'secondary';
+            }
+        }
+
+        // Update reservation status
+        async function updateReservationStatus(reservationId, status) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/reservations/${reservationId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('adminToken')
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(`Reservation ${status} successfully!`, 'success');
+                    loadAllReservations(); // Reload the table
+                } else {
+                    showNotification(result.message || 'Failed to update reservation status', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating reservation status:', error);
+                showNotification('Error updating reservation status', 'error');
+            }
+        }
+
+        // View reservation details
+        function viewReservationDetails(reservationId) {
+            // This would open a modal with reservation details
+            showNotification(`Viewing reservation #${reservationId} details`, 'info');
+        }
+
+        // Load all orders for orders section (real database orders)
+        async function loadAllOrders() {
+            const tableBody = document.getElementById('ordersTable');
+            
+            try {
+                // Try to load real database orders first, fallback to demo
+                let response;
+                try {
+                    response = await grilliAPI.getAllOrders();
+                } catch (error) {
+                    console.log('Database orders not available, trying demo orders...');
+                    response = await grilliAPI.getDemoOrdersAdmin();
+                }
+                
+                if (response.success && response.orders && response.orders.length > 0) {
+                    tableBody.innerHTML = '';
+                    response.orders.forEach(order => {
+                        const row = document.createElement('tr');
+                        const customerName = 'Website Customer'; // Database orders are from website
+                        const itemsCount = order.items ? order.items.length : 0;
+                        const orderDate = new Date(order.created_at).toLocaleString();
+                        
+                        row.innerHTML = `
+                            <td>
+                                <strong>${order.order_number}</strong><br>
+                                <small class="text-muted">${orderDate}</small>
+                            </td>
+                            <td>
+                                <strong>${customerName}</strong><br>
+                                <small class="text-muted">Website Order</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-info">${itemsCount} items</span><br>
+                                <small class="text-muted">₹${order.total_amount}</small>
+                            </td>
+                            <td>₹${parseFloat(order.total_amount).toFixed(2)}</td>
+                            <td><span class="badge bg-${getStatusColor(order.status)}">${order.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="viewOrderDetails(${order.id}, '${order.order_number}')" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-success me-1" onclick="updateOrderStatus(${order.id}, 'confirmed')" title="Confirm">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-warning me-1" onclick="updateOrderStatus(${order.id}, 'preparing')" title="Preparing">
+                                    <i class="fas fa-clock"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-success me-1" onclick="updateOrderStatus(${order.id}, 'ready')" title="Ready">
+                                    <i class="fas fa-bell"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus(${order.id}, 'cancelled')" title="Cancel">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No orders found. Try placing an order from the main website!</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center">Error loading orders. Make sure the backend server is running.</td></tr>';
+            }
+        }
+
+        // Update order status
+        async function updateOrderStatus(orderId, status) {
+            try {
+                const response = await grilliAPI.updateOrderStatus(orderId, status);
+                if (response.success) {
+                    // Show success message
+                    const statusMessages = {
+                        'confirmed': 'Order confirmed!',
+                        'preparing': 'Order is being prepared!',
+                        'ready': 'Order is ready for pickup/delivery!',
+                        'delivered': 'Order delivered!',
+                        'cancelled': 'Order cancelled!'
+                    };
+                    
+                    alert(statusMessages[status] || 'Order status updated successfully!');
+                    loadAllOrders(); // Reload orders
+                    loadRecentOrders(); // Reload recent orders
+                    loadDashboardStats(); // Reload dashboard stats
+                } else {
+                    alert('Failed to update order status: ' + response.message);
+                }
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                alert('Error updating order status. Please try again.');
+            }
+        }
+
+
+        // View order details
+        function viewOrderDetails(orderId, orderNumber) {
+            // Create a detailed view of the order
+            alert(`Order Details\n\nOrder Number: ${orderNumber}\nOrder ID: ${orderId}\n\nNote: This is a demo order system. In a full implementation, this would show complete order details including items, customer info, and delivery status.`);
+        }
+
+        // Enhanced Admin API Functions
+        const adminAPI = {
+            baseURL: 'http://localhost:3000/api',
+            token: 'demo-admin-token',
+            
+            async request(endpoint, options = {}) {
+                const url = `${this.baseURL}${endpoint}`;
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.token}`,
+                        ...options.headers
+                    },
+                    ...options
+                };
+                
+                try {
+                    const response = await fetch(url, config);
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('API Error:', error);
+                    return { success: false, message: 'Network error' };
+                }
+            },
+
+            // Orders
+            async getAllOrders() {
+                return await this.request('/orders/admin/all');
+            },
+            async getOrderDetails(id) {
+                return await this.request(`/orders/${id}`);
+            },
+            async updateOrderStatus(id, status) {
+                return await this.request(`/orders/${id}/status`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status })
+                });
+            },
+
+            // Menu
+            async getAllMenuItems() {
+                return await this.request('/menu/admin/all');
+            },
+            async getAllCategories() {
+                return await this.request('/menu/admin/categories');
+            },
+            async createMenuItem(item) {
+                return await this.request('/menu/admin/items', {
+                    method: 'POST',
+                    body: JSON.stringify(item)
+                });
+            },
+            async updateMenuItem(id, item) {
+                return await this.request(`/menu/admin/items/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(item)
+                });
+            },
+            async deleteMenuItem(id) {
+                return await this.request(`/menu/admin/items/${id}`, {
+                    method: 'DELETE'
+                });
+            },
+
+            // Customers
+            async getAllCustomers() {
+                return await this.request('/customers/admin/all');
+            },
+            async getCustomerDetails(id) {
+                return await this.request(`/customers/admin/${id}`);
+            },
+            async updateCustomer(id, data) {
+                return await this.request(`/customers/admin/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(data)
+                });
+            },
+
+            // Reservations
+            async getAllReservations() {
+                return await this.request('/reservations/admin/all');
+            },
+            async updateReservationStatus(id, status) {
+                return await this.request(`/reservations/${id}/status`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status })
+                });
+            }
+        };
+
+        // Enhanced Order Management
+        async function loadAllOrders() {
+            const tableBody = document.getElementById('ordersTable');
+            if (!tableBody) return;
+            
+            try {
+                tableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4"><div class="spinner-border text-primary"></div><div class="mt-2">Loading orders...</div></td></tr>';
+                
+                const response = await adminAPI.getAllOrders();
+                
+                if (response.success && response.orders) {
+                    tableBody.innerHTML = '';
+                    response.orders.forEach(order => {
+                        const row = document.createElement('tr');
+                        const customerName = order.customer_name || 'Guest Customer';
+                        const orderDate = new Date(order.created_at).toLocaleString();
+                        
+                        row.innerHTML = `
+                            <td>
+                                <strong>${order.order_number}</strong><br>
+                                <small class="text-muted">${orderDate}</small>
+                            </td>
+                            <td>
+                                <strong>${customerName}</strong><br>
+                                <small class="text-muted">${order.customer_email || 'No email'}</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-info">${order.items_count || 0} items</span><br>
+                                <small class="text-muted">${order.payment_method}</small>
+                            </td>
+                            <td>₹${parseFloat(order.total_amount).toFixed(2)}</td>
+                            <td><span class="badge bg-${getOrderStatusColor(order.status)}">${order.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="viewOrderDetails(${order.id})" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-success me-1" onclick="updateOrderStatus(${order.id}, 'confirmed')" title="Confirm">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-warning me-1" onclick="updateOrderStatus(${order.id}, 'preparing')" title="Preparing">
+                                    <i class="fas fa-clock"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-success me-1" onclick="updateOrderStatus(${order.id}, 'ready')" title="Ready">
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger me-1" onclick="updateOrderStatus(${order.id}, 'cancelled')" title="Cancel">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4">No orders found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                tableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-danger">Error loading orders</td></tr>';
+            }
+        }
+
+        function getOrderStatusColor(status) {
+            const colors = {
+                'pending': 'warning',
+                'confirmed': 'info',
+                'preparing': 'primary',
+                'ready': 'success',
+                'delivered': 'success',
+                'cancelled': 'danger'
+            };
+            return colors[status] || 'secondary';
+        }
+
+        async function updateOrderStatus(orderId, status) {
+            try {
+                const response = await adminAPI.updateOrderStatus(orderId, status);
+                if (response.success) {
+                    showNotification(`Order ${status} successfully!`, 'success');
+                    loadAllOrders();
+                } else {
+                    showNotification(response.message || 'Failed to update order status', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                showNotification('Error updating order status', 'error');
+            }
+        }
+
+        async function viewOrderDetails(orderId) {
+            try {
+                const response = await adminAPI.getOrderDetails(orderId);
+                if (response.success) {
+                    const order = response.order;
+                    const modal = document.createElement('div');
+                    modal.className = 'modal fade';
+                    modal.innerHTML = `
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Order Details - ${order.order_number}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Customer Information</h6>
+                                            <p><strong>Name:</strong> ${order.first_name} ${order.last_name}</p>
+                                            <p><strong>Email:</strong> ${order.email}</p>
+                                            <p><strong>Phone:</strong> ${order.phone || 'N/A'}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Order Information</h6>
+                                            <p><strong>Status:</strong> <span class="badge bg-${getOrderStatusColor(order.status)}">${order.status}</span></p>
+                                            <p><strong>Payment:</strong> ${order.payment_method}</p>
+                                            <p><strong>Total:</strong> ₹${parseFloat(order.total_amount).toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <h6>Order Items</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${order.items.map(item => `
+                                                    <tr>
+                                                        <td>${item.name}</td>
+                                                        <td>${item.quantity}</td>
+                                                        <td>₹${parseFloat(item.unit_price).toFixed(2)}</td>
+                                                        <td>₹${parseFloat(item.total_price).toFixed(2)}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    const bsModal = new bootstrap.Modal(modal);
+                    bsModal.show();
+                    modal.addEventListener('hidden.bs.modal', () => modal.remove());
+                } else {
+                    showNotification(response.message || 'Failed to load order details', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading order details:', error);
+                showNotification('Error loading order details', 'error');
+            }
+        }
+
+        // Enhanced Menu Management
+        async function loadAllMenuItems() {
+            const tableBody = document.getElementById('menuTable');
+            if (!tableBody) return;
+            
+            try {
+                tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4"><div class="spinner-border text-primary"></div><div class="mt-2">Loading menu items...</div></td></tr>';
+                
+                const response = await adminAPI.getAllMenuItems();
+                
+                if (response.success && response.menuItems) {
+                    tableBody.innerHTML = '';
+                    response.menuItems.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>
+                                <img src="${item.image_url || 'assets/images/placeholder.jpg'}" alt="${item.name}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                            </td>
+                            <td>
+                                <strong>${item.name}</strong><br>
+                                <small class="text-muted">${item.category_name || 'No Category'}</small>
+                            </td>
+                            <td>${item.description}</td>
+                            <td>₹${parseFloat(item.price).toFixed(2)}</td>
+                            <td>
+                                <span class="badge bg-${item.is_available ? 'success' : 'danger'}">${item.is_available ? 'Available' : 'Unavailable'}</span><br>
+                                <span class="badge bg-${item.is_vegetarian ? 'success' : 'warning'}">${item.is_vegetarian ? 'Veg' : 'Non-Veg'}</span>
+                            </td>
+                            <td>${item.preparation_time} min</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="editMenuItem(${item.id})" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-${item.is_available ? 'warning' : 'success'} me-1" onclick="toggleMenuItemAvailability(${item.id}, ${!item.is_available})" title="${item.is_available ? 'Make Unavailable' : 'Make Available'}">
+                                    <i class="fas fa-${item.is_available ? 'eye-slash' : 'eye'}"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteMenuItem(${item.id})" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4">No menu items found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading menu items:', error);
+                tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Error loading menu items</td></tr>';
+            }
+        }
+
+        async function toggleMenuItemAvailability(itemId, isAvailable) {
+            try {
+                const response = await adminAPI.updateMenuItem(itemId, { is_available: isAvailable });
+                if (response.success) {
+                    showNotification(`Menu item ${isAvailable ? 'made available' : 'made unavailable'} successfully!`, 'success');
+                    loadAllMenuItems();
+                } else {
+                    showNotification(response.message || 'Failed to update menu item', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating menu item:', error);
+                showNotification('Error updating menu item', 'error');
+            }
+        }
+
+        async function deleteMenuItem(itemId) {
+            if (confirm('Are you sure you want to delete this menu item?')) {
+                try {
+                    const response = await adminAPI.deleteMenuItem(itemId);
+                    if (response.success) {
+                        showNotification('Menu item deleted successfully!', 'success');
+                        loadAllMenuItems();
+                    } else {
+                        showNotification(response.message || 'Failed to delete menu item', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error deleting menu item:', error);
+                    showNotification('Error deleting menu item', 'error');
+                }
+            }
+        }
+
+        // Enhanced Customer Management
+        async function loadAllCustomers() {
+            const tableBody = document.getElementById('customersTable');
+            if (!tableBody) return;
+            
+            try {
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4"><div class="spinner-border text-primary"></div><div class="mt-2">Loading customers...</div></td></tr>';
+                
+                const response = await adminAPI.getAllCustomers();
+                
+                if (response.success && response.data && response.data.customers) {
+                    tableBody.innerHTML = '';
+                    response.data.customers.forEach(customer => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>
+                                <strong>${customer.first_name} ${customer.last_name}</strong><br>
+                                <small class="text-muted">ID: ${customer.id}</small>
+                            </td>
+                            <td>${customer.email}</td>
+                            <td>${customer.phone || 'N/A'}</td>
+                            <td>
+                                <span class="badge bg-info">${customer.total_orders} orders</span><br>
+                                <span class="badge bg-primary">${customer.total_reservations} reservations</span>
+                            </td>
+                            <td>₹${parseFloat(customer.total_spent).toFixed(2)}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="viewCustomerDetails(${customer.id})" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-warning" onclick="editCustomer(${customer.id})" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4">No customers found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading customers:', error);
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-danger">Error loading customers</td></tr>';
+            }
+        }
+
+        async function viewCustomerDetails(customerId) {
+            try {
+                const response = await adminAPI.getCustomerDetails(customerId);
+                if (response.success) {
+                    const customer = response.customer;
+                    const modal = document.createElement('div');
+                    modal.className = 'modal fade';
+                    modal.innerHTML = `
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Customer Details - ${customer.first_name} ${customer.last_name}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Personal Information</h6>
+                                            <p><strong>Name:</strong> ${customer.first_name} ${customer.last_name}</p>
+                                            <p><strong>Email:</strong> ${customer.email}</p>
+                                            <p><strong>Phone:</strong> ${customer.phone || 'N/A'}</p>
+                                            <p><strong>Address:</strong> ${customer.address || 'N/A'}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Account Information</h6>
+                                            <p><strong>Member Since:</strong> ${new Date(customer.created_at).toLocaleDateString()}</p>
+                                            <p><strong>Last Updated:</strong> ${new Date(customer.updated_at).toLocaleDateString()}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <h6>Recent Orders (${customer.orders.length})</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order #</th>
+                                                    <th>Amount</th>
+                                                    <th>Status</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${customer.orders.map(order => `
+                                                    <tr>
+                                                        <td>${order.order_number}</td>
+                                                        <td>₹${parseFloat(order.total_amount).toFixed(2)}</td>
+                                                        <td><span class="badge bg-${getOrderStatusColor(order.status)}">${order.status}</span></td>
+                                                        <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h6>Recent Reservations (${customer.reservations.length})</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Party Size</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${customer.reservations.map(reservation => `
+                                                    <tr>
+                                                        <td>${new Date(reservation.date).toLocaleDateString()}</td>
+                                                        <td>${reservation.time}</td>
+                                                        <td>${reservation.party_size}</td>
+                                                        <td><span class="badge bg-${getReservationStatusColor(reservation.status)}">${reservation.status}</span></td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    const bsModal = new bootstrap.Modal(modal);
+                    bsModal.show();
+                    modal.addEventListener('hidden.bs.modal', () => modal.remove());
+                } else {
+                    showNotification(response.message || 'Failed to load customer details', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading customer details:', error);
+                showNotification('Error loading customer details', 'error');
+            }
+        }
+
+        // Enhanced Dashboard Statistics
+        async function loadDashboardStats() {
+            try {
+                // Load orders statistics
+                const ordersResponse = await adminAPI.request('/orders/admin/statistics');
+                if (ordersResponse.success) {
+                    updateDashboardStats('orders', ordersResponse.statistics);
+                }
+
+                // Load reservations statistics
+                const reservationsResponse = await adminAPI.request('/reservations/admin/statistics');
+                if (reservationsResponse.success) {
+                    updateDashboardStats('reservations', reservationsResponse.statistics);
+                }
+
+                // Load customers statistics
+                const customersResponse = await adminAPI.request('/customers/admin/statistics');
+                if (customersResponse.success) {
+                    updateDashboardStats('customers', customersResponse.statistics);
+                }
+            } catch (error) {
+                console.error('Error loading dashboard stats:', error);
+            }
+        }
+
+        function updateDashboardStats(type, stats) {
+            // Update dashboard cards with real statistics
+            if (type === 'orders') {
+                document.getElementById('totalOrders').textContent = stats.totalOrders || 0;
+                document.getElementById('pendingOrders').textContent = stats.ordersByStatus?.pending || 0;
+                document.getElementById('completedOrders').textContent = stats.ordersByStatus?.delivered || 0;
+            } else if (type === 'reservations') {
+                document.getElementById('totalReservations').textContent = stats.totalReservations || 0;
+                document.getElementById('pendingReservations').textContent = stats.reservationsByStatus?.pending || 0;
+                document.getElementById('confirmedReservations').textContent = stats.reservationsByStatus?.confirmed || 0;
+            } else if (type === 'customers') {
+                document.getElementById('totalCustomers').textContent = stats.totalCustomers || 0;
+                document.getElementById('newCustomers').textContent = stats.newCustomersThisMonth || 0;
+            }
+        }
+
+        // Enhanced showSection function
+        function showSection(sectionId, linkEl, ev) {
+            try { if (ev && ev.preventDefault) ev.preventDefault(); } catch (e) {}
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Add active class to clicked link
+            if (linkEl) {
+                linkEl.classList.add('active');
+            }
+            
+            // Load section-specific data
+            switch(sectionId) {
+                case 'dashboard':
+                    loadDashboardStats();
+                    break;
+                case 'orders':
+                    loadAllOrders();
+                    break;
+                case 'menu':
+                    loadAllMenuItems();
+                    break;
+                case 'reservations':
+                    loadAllReservations();
+                    break;
+                case 'customers':
+                    loadAllCustomers();
+                    break;
+                case 'feedback':
+                    loadFeedbackData();
+                    break;
+            }
+        }
+
+        // Menu Management Functions
+        let categories = [];
+        let editingMenuItem = null;
+
+        async function loadCategories() {
+            try {
+                const response = await adminAPI.getAllCategories();
+                if (response.success) {
+                    categories = response.categories;
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        function showAddMenuItemModal() {
+            editingMenuItem = null;
+            showMenuItemModal();
+        }
+
+        function showMenuItemModal(menuItem = null) {
+            editingMenuItem = menuItem;
+            const modal = document.createElement('div');
+            modal.className = 'modal fade';
+            modal.innerHTML = `
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">${menuItem ? 'Edit Menu Item' : 'Add New Menu Item'}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="menuItemForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="menuItemName" class="form-label">Item Name *</label>
+                                            <input type="text" class="form-control" id="menuItemName" required 
+                                                   value="${menuItem ? menuItem.name : ''}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="menuItemPrice" class="form-label">Price (₹) *</label>
+                                            <input type="number" class="form-control" id="menuItemPrice" step="0.01" min="0" required 
+                                                   value="${menuItem ? menuItem.price : ''}">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="menuItemDescription" class="form-label">Description *</label>
+                                    <textarea class="form-control" id="menuItemDescription" rows="3" required>${menuItem ? menuItem.description : ''}</textarea>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="menuItemCategory" class="form-label">Category *</label>
+                                            <select class="form-select" id="menuItemCategory" required>
+                                                <option value="">Select Category</option>
+                                                ${categories.map(cat => 
+                                                    `<option value="${cat.id}" ${menuItem && menuItem.category_id == cat.id ? 'selected' : ''}>${cat.name}</option>`
+                                                ).join('')}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="menuItemImage" class="form-label">Image URL</label>
+                                            <input type="url" class="form-control" id="menuItemImage" 
+                                                   value="${menuItem ? menuItem.image_url : ''}">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="menuItemPrepTime" class="form-label">Prep Time (minutes)</label>
+                                            <input type="number" class="form-control" id="menuItemPrepTime" min="1" 
+                                                   value="${menuItem ? menuItem.preparation_time : '15'}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="menuItemSpiceLevel" class="form-label">Spice Level</label>
+                                            <select class="form-select" id="menuItemSpiceLevel">
+                                                <option value="mild" ${menuItem && menuItem.spice_level === 'mild' ? 'selected' : ''}>Mild</option>
+                                                <option value="medium" ${menuItem && menuItem.spice_level === 'medium' ? 'selected' : ''}>Medium</option>
+                                                <option value="hot" ${menuItem && menuItem.spice_level === 'hot' ? 'selected' : ''}>Hot</option>
+                                                <option value="extra_hot" ${menuItem && menuItem.spice_level === 'extra_hot' ? 'selected' : ''}>Extra Hot</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="menuItemVegetarian" class="form-label">Type</label>
+                                            <select class="form-select" id="menuItemVegetarian">
+                                                <option value="false" ${menuItem && !menuItem.is_vegetarian ? 'selected' : ''}>Non-Vegetarian</option>
+                                                <option value="true" ${menuItem && menuItem.is_vegetarian ? 'selected' : ''}>Vegetarian</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="menuItemAvailable" 
+                                               ${menuItem ? (menuItem.is_available ? 'checked' : '') : 'checked'}>
+                                        <label class="form-check-label" for="menuItemAvailable">
+                                            Available for ordering
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="saveMenuItem()">
+                                ${menuItem ? 'Update Item' : 'Add Item'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            const bsModal = new bootstrap.Modal(modal);
+            bsModal.show();
+            modal.addEventListener('hidden.bs.modal', () => modal.remove());
+        }
+
+        async function saveMenuItem() {
+            const form = document.getElementById('menuItemForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const menuItemData = {
+                name: document.getElementById('menuItemName').value,
+                description: document.getElementById('menuItemDescription').value,
+                price: parseFloat(document.getElementById('menuItemPrice').value),
+                category_id: parseInt(document.getElementById('menuItemCategory').value),
+                image_url: document.getElementById('menuItemImage').value || null,
+                preparation_time: parseInt(document.getElementById('menuItemPrepTime').value) || 15,
+                spice_level: document.getElementById('menuItemSpiceLevel').value,
+                is_vegetarian: document.getElementById('menuItemVegetarian').value === 'true',
+                is_available: document.getElementById('menuItemAvailable').checked
+            };
+
+            try {
+                let response;
+                if (editingMenuItem) {
+                    response = await adminAPI.updateMenuItem(editingMenuItem.id, menuItemData);
+                } else {
+                    response = await adminAPI.createMenuItem(menuItemData);
+                }
+
+                if (response.success) {
+                    showNotification(`Menu item ${editingMenuItem ? 'updated' : 'created'} successfully!`, 'success');
+                    loadAllMenuItems();
+                    // Close modal
+                    const modal = document.querySelector('.modal');
+                    if (modal) {
+                        const bsModal = bootstrap.Modal.getInstance(modal);
+                        bsModal.hide();
+                    }
+                } else {
+                    showNotification(response.message || 'Failed to save menu item', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving menu item:', error);
+                showNotification('Error saving menu item', 'error');
+            }
+        }
+
+        function editMenuItem(itemId) {
+            // Find the menu item in the current loaded data
+            const menuItems = Array.from(document.querySelectorAll('#menuTable tr')).map(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    return {
+                        id: itemId,
+                        name: cells[1].querySelector('strong').textContent,
+                        category_name: cells[2].textContent.trim(),
+                        price: parseFloat(cells[3].textContent.replace('₹', '')),
+                        is_available: cells[4].querySelector('.badge').textContent.includes('Available'),
+                        is_vegetarian: cells[4].querySelectorAll('.badge')[1].textContent.includes('Veg')
+                    };
+                }
+                return null;
+            }).filter(item => item && item.id === itemId);
+
+            if (menuItems.length > 0) {
+                showMenuItemModal(menuItems[0]);
+            } else {
+                showNotification('Menu item not found', 'error');
+            }
+        }
+
+        // Initialize the dashboard when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDashboard();
+            loadFeedbackData();
+            loadAllOrders();
+            loadDashboardStats();
+            loadCategories();
+        });
+    </script>
+</body>
+</html>

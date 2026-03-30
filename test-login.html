@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-btn { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .test-btn:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Login System Test</h1>
+    
+    <button class="test-btn" onclick="testLoginButton()">Test Login Button</button>
+    <button class="test-btn" onclick="testLoginModal()">Test Login Modal</button>
+    <button class="test-btn" onclick="testForms()">Test Forms</button>
+    <button class="test-btn" onclick="testAPI()">Test API Connection</button>
+    
+    <div id="result"></div>
+
+    <script>
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+
+        function testLoginButton() {
+            console.log('Testing login button...');
+            const loginBtn = document.getElementById('loginBtn');
+            console.log('Login button found:', !!loginBtn);
+            
+            if (loginBtn) {
+                showResult('✅ Login button found!', 'success');
+                console.log('Login button onclick:', loginBtn.onclick);
+                console.log('Login button class:', loginBtn.className);
+            } else {
+                showResult('❌ Login button not found!', 'error');
+            }
+        }
+
+        function testLoginModal() {
+            console.log('Testing login modal...');
+            const modal = document.getElementById('loginModal');
+            console.log('Login modal found:', !!modal);
+            
+            if (modal) {
+                showResult('✅ Login modal found!', 'success');
+                console.log('Modal display style:', modal.style.display);
+            } else {
+                showResult('❌ Login modal not found!', 'error');
+            }
+        }
+
+        function testForms() {
+            console.log('Testing forms...');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            
+            console.log('Login form found:', !!loginForm);
+            console.log('Register form found:', !!registerForm);
+            
+            if (loginForm && registerForm) {
+                showResult('✅ Both forms found!', 'success');
+            } else {
+                showResult('❌ Forms missing! Login: ' + !!loginForm + ', Register: ' + !!registerForm, 'error');
+            }
+        }
+
+        async function testAPI() {
+            console.log('Testing API connection...');
+            try {
+                const response = await fetch('http://localhost:3000/api/menu');
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('✅ API connection successful!', 'success');
+                } else {
+                    showResult('❌ API returned error: ' + data.message, 'error');
+                }
+            } catch (error) {
+                console.error('API test error:', error);
+                showResult('❌ API connection failed: ' + error.message, 'error');
+            }
+        }
+
+        // Test on page load
+        window.addEventListener('load', function() {
+            console.log('Page loaded, running tests...');
+            testLoginButton();
+            testLoginModal();
+            testForms();
+            testAPI();
+        });
+    </script>
+</body>
+</html>

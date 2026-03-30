@@ -1,0 +1,3027 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+    - primary meta tags
+  -->
+  <title>Grilli - Amazing & Delicious Food</title>
+  <meta name="title" content="Grilli - Amazing & Delicious Food">
+  <meta name="description" content="This is a Restaurant html template made by ABUSHAHMA and group 11">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="./assets/images/hero-slider-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
+
+</head>
+
+<body id="top">
+
+  <script>
+    // Ensure preloader never blocks rendering
+    document.addEventListener('DOMContentLoaded', function () {
+      var preloader = document.querySelector('[data-preaload]');
+      if (preloader) {
+        preloader.classList.add('loaded');
+        document.body.classList.add('loaded');
+        setTimeout(function () { try { preloader.remove(); } catch (e) {} }, 500);
+      }
+    });
+    // Hard fallback in case other scripts fail
+    setTimeout(function () {
+      var preloader = document.querySelector('[data-preaload]');
+      if (preloader) {
+        preloader.classList.add('loaded');
+        try { preloader.remove(); } catch (e) {}
+      }
+      document.body.classList.add('loaded');
+    }, 4000);
+  </script>
+
+  <!-- 
+    - #PRELOADER
+  -->
+
+  <div class="preload" data-preaload>
+    <div class="circle"></div>
+    <p class="text">Grilli</p>
+  </div>
+
+
+
+
+
+  <!-- 
+    - #TOP BAR
+  -->
+
+  <div class="topbar">
+    <div class="container">
+
+      <address class="topbar-item">
+        <div class="icon">
+          <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span">
+          Restaurant St, Delicious City, London 9578, UK
+        </span>
+      </address>
+
+      <div class="separator"></div>
+
+      <div class="topbar-item item-2">
+        <div class="icon">
+          <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span">Daily : 8.00 am to 10.00 pm</span>
+      </div>
+
+      <a href="tel:+11234567890" class="topbar-item link">
+        <div class="icon">
+          <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span">+1 123 456 7890</span>
+      </a>
+
+      <div class="separator"></div>
+
+      <a href="mailto:booking@restaurant.com" class="topbar-item link">
+        <div class="icon">
+          <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span">booking@restaurant.com</span>
+      </a>
+
+    </div>
+  </div>
+
+
+
+
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="#" class="logo">
+        <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <button class="close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+        <a href="#" class="logo">
+          <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+        </a>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#home" class="navbar-link hover-underline active">
+              <div class="separator"></div>
+
+              <span class="span">Home</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#menu" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Menus</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#about" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">About Us</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#chefs" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Our Chefs</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#blog" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Blog</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#contact" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Contact</span>
+            </a>
+          </li>
+
+        </ul>
+
+        <div class="text-center">
+          <p class="headline-1 navbar-title">Visit Us</p>
+
+          <address class="body-4">
+            Restaurant St, Delicious City, <br>
+            London 9578, UK
+          </address>
+
+          <p class="body-4 navbar-text">Open: 9.30 am - 2.30pm</p>
+
+          <a href="mailto:booking@grilli.com" class="body-4 sidebar-link">booking@grilli.com</a>
+
+          <div class="separator"></div>
+
+          <p class="contact-label">Booking Request</p>
+
+          <a href="tel:+88123123456" class="body-1 contact-number hover-underline">
+            +88-123-123456
+          </a>
+        </div>
+
+      </nav>
+
+
+      <!-- Cart Button -->
+      <button class="cart-btn" id="cartBtn" onclick="window.handleCartClick ? window.handleCartClick() : console.log('Cart function not loaded yet')" title="View Cart">
+        <ion-icon name="bag-outline"></ion-icon>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+
+      <!-- Login/User Button -->
+      <button class="login-btn" id="loginBtn" onclick="window.showLoginModal()" title="Login / Register" style="cursor: pointer; transition: all 0.3s ease;">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="login-text">Login</span>
+      </button>
+
+      <a href="#" class="btn btn-secondary">
+        <span class="text text-1">Find A Table</span>
+
+        <span class="text text-2" aria-hidden="true">Find A Table</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero text-center" aria-label="home" id="home">
+
+        <ul class="hero-slider" data-hero-slider>
+
+          <li class="slider-item active" data-hero-slider-item>
+
+            <div class="slider-bg">
+              <img src="./assets/images/hero-slider-1.jpg" width="1880" height="950" alt="" class="img-cover">
+            </div>
+
+            <p class="label-2 section-subtitle slider-reveal">Tradational & Hygine</p>
+
+            <h1 class="display-1 hero-title slider-reveal">
+              For the love of <br>
+              delicious food
+            </h1>
+
+            <p class="body-2 hero-text slider-reveal">
+              Come with family & feel the joy of mouthwatering food
+            </p>
+
+            <a href="#" class="btn btn-primary slider-reveal">
+              <span class="text text-1">View Our Menu</span>
+
+              <span class="text text-2" aria-hidden="true">View Our Menu</span>
+            </a>
+
+          </li>
+
+          <li class="slider-item" data-hero-slider-item>
+
+            <div class="slider-bg">
+              <img src="./assets/images/hero-slider-2.jpg" width="1880" height="950" alt="" class="img-cover">
+            </div>
+
+            <p class="label-2 section-subtitle slider-reveal">delightful experience</p>
+
+            <h1 class="display-1 hero-title slider-reveal">
+              Flavors Inspired by <br>
+              the Seasons
+            </h1>
+
+            <p class="body-2 hero-text slider-reveal">
+              Come with family & feel the joy of mouthwatering food
+            </p>
+
+            <a href="#" class="btn btn-primary slider-reveal">
+              <span class="text text-1">View Our Menu</span>
+
+              <span class="text text-2" aria-hidden="true">View Our Menu</span>
+            </a>
+
+          </li>
+
+          <li class="slider-item" data-hero-slider-item>
+
+            <div class="slider-bg">
+              <img src="./assets/images/hero-slider-3.jpg" width="1880" height="950" alt="" class="img-cover">
+            </div>
+
+            <p class="label-2 section-subtitle slider-reveal">amazing & delicious</p>
+
+            <h1 class="display-1 hero-title slider-reveal">
+              Where every flavor <br>
+              tells a story
+            </h1>
+
+            <p class="body-2 hero-text slider-reveal">
+              Come with family & feel the joy of mouthwatering food
+            </p>
+
+            <a href="#" class="btn btn-primary slider-reveal">
+              <span class="text text-1">View Our Menu</span>
+
+              <span class="text text-2" aria-hidden="true">View Our Menu</span>
+            </a>
+
+          </li>
+
+        </ul>
+
+        <button class="slider-btn prev" aria-label="slide to previous" data-prev-btn>
+          <ion-icon name="chevron-back"></ion-icon>
+        </button>
+
+        <button class="slider-btn next" aria-label="slide to next" data-next-btn>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </button>
+
+        <!-- Slider Indicators -->
+        <div class="slider-indicators">
+          <button class="slider-indicator active" data-slider-indicator="0" aria-label="go to slide 1"></button>
+          <button class="slider-indicator" data-slider-indicator="1" aria-label="go to slide 2"></button>
+          <button class="slider-indicator" data-slider-indicator="2" aria-label="go to slide 3"></button>
+        </div>
+
+        <a href="#" class="hero-btn has-after">
+          <img src="./assets/images/hero-icon.png" width="48" height="48" alt="booking icon">
+
+          <span class="label-2 text-center span">Book A Table</span>
+        </a>
+
+      </section>
+
+
+
+
+
+      <!-- 
+        - #SERVICE
+      -->
+
+      <section class="section service bg-black-10 text-center" aria-label="service">
+        <div class="container">
+
+          <p class="section-subtitle label-2">Flavors For Royalty</p>
+
+          <h2 class="headline-1 section-title">We Offer Top Notch</h2>
+
+          <p class="section-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry lorem Ipsum has been the industrys
+            standard dummy text ever.
+          </p>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="service-card">
+
+                <a href="#" class="has-before hover:shine">
+                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
+                    <img src="./assets/images/service-1.jpg" width="285" height="336" loading="lazy" alt="Breakfast"
+                      class="img-cover">
+                  </figure>
+                </a>
+
+                <div class="card-content">
+
+                  <h3 class="title-4 card-title">
+                    <a href="#">Breakfast</a>
+                  </h3>
+
+                  <a href="#" class="btn-text hover-underline label-2">View Menu</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <a href="#" class="has-before hover:shine">
+                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
+                    <img src="./assets/images/service-2.jpg" width="285" height="336" loading="lazy" alt="Appetizers"
+                      class="img-cover">
+                  </figure>
+                </a>
+
+                <div class="card-content">
+
+                  <h3 class="title-4 card-title">
+                    <a href="#">Appetizers</a>
+                  </h3>
+
+                  <a href="#" class="btn-text hover-underline label-2">View Menu</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <a href="#" class="has-before hover:shine">
+                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
+                    <img src="./assets/images/service-3.jpg" width="285" height="336" loading="lazy" alt="Drinks"
+                      class="img-cover">
+                  </figure>
+                </a>
+
+                <div class="card-content">
+
+                  <h3 class="title-4 card-title">
+                    <a href="#">Drinks</a>
+                  </h3>
+
+                  <a href="#" class="btn-text hover-underline label-2">View Menu</a>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          <img src="./assets/images/shape-1.png" width="246" height="412" loading="lazy" alt="shape"
+            class="shape shape-1 move-anim">
+          <img src="./assets/images/shape-2.png" width="343" height="345" loading="lazy" alt="shape"
+            class="shape shape-2 move-anim">
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #ABOUT
+      -->
+
+      <section class="section about text-center" aria-labelledby="about-label" id="about">
+        <div class="container">
+
+          <div class="about-content">
+
+            <p class="label-2 section-subtitle" id="about-label">Our Story</p>
+
+            <h2 class="headline-1 section-title">Every Fla vor Tells a Story</h2>
+
+            <p class="section-text">
+              Lorem Ipsum is simply dummy text of the printingand typesetting industry lorem Ipsum has been the
+              industrys standard dummy text ever since the when an unknown printer took a galley of type and scrambled
+              it to make a type specimen book It has survived not only five centuries, but also the leap into.
+            </p>
+
+            <div class="contact-label">Book Through Call</div>
+
+            <a href="tel:+804001234567" class="body-1 contact-number hover-underline">+80 (400) 123 4567</a>
+
+            <a href="#" class="btn btn-primary">
+              <span class="text text-1">Read More</span>
+
+              <span class="text text-2" aria-hidden="true">Read More</span>
+            </a>
+
+          </div>
+
+          <figure class="about-banner">
+
+            <img src="./assets/images/about-banner.jpg" width="570" height="570" loading="lazy" alt="about banner"
+              class="w-100" data-parallax-item data-parallax-speed="1">
+
+            <div class="abs-img abs-img-1 has-before" data-parallax-item data-parallax-speed="1.75">
+              <img src="./assets/images/about-abs-image.jpg" width="285" height="285" loading="lazy" alt=""
+                class="w-100">
+            </div>
+
+            <div class="abs-img abs-img-2 has-before">
+              <img src="./assets/images/badge-2.png" width="133" height="134" loading="lazy" alt="">
+            </div>
+
+          </figure>
+
+          <img src="./assets/images/shape-3.png" width="197" height="194" loading="lazy" alt="" class="shape">
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #SPECIAL DISH
+      -->
+
+      <section class="special-dish text-center" aria-labelledby="dish-label">
+
+        <div class="special-dish-banner">
+          <img src="./assets/images/special-dish-banner.jpg" width="940" height="900" loading="lazy" alt="special dish"
+            class="img-cover">
+        </div>
+
+        <div class="special-dish-content bg-black-10">
+          <div class="container">
+
+            <img src="./assets/images/badge-1.png" width="28" height="41" loading="lazy" alt="badge" class="abs-img">
+
+            <p class="section-subtitle label-2">Special Dish</p>
+
+            <h2 class="headline-1 section-title">Lobster Tortellini</h2>
+
+            <p class="section-text">
+              Lorem Ipsum is simply dummy text of the printingand typesetting industry lorem Ipsum has been the
+              industrys standard dummy text ever since the when an unknown printer took a galley of type.
+            </p>
+
+            <div class="wrapper">
+              <del class="del body-3">$40.00</del>
+
+              <span class="span body-1">$20.00</span>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+              <span class="text text-1">View All Menu</span>
+
+              <span class="text text-2" aria-hidden="true">View All Menu</span>
+            </a>
+
+          </div>
+        </div>
+
+        <img src="./assets/images/shape-4.png" width="179" height="359" loading="lazy" alt="" class="shape shape-1">
+
+        <img src="./assets/images/shape-9.png" width="351" height="462" loading="lazy" alt="" class="shape shape-2">
+
+      </section>
+
+
+
+
+
+      <!-- 
+        - #MENU
+      -->
+
+      <section class="section menu" aria-label="menu-label" id="menu">
+        <div class="container">
+
+          <p class="section-subtitle text-center label-2">Special Selection</p>
+
+          <h2 class="headline-1 section-title text-center">Delicious Menu</h2>
+
+          <!-- Category filter removed - showing all items directly -->
+
+          <!-- Loading indicator (hidden since we have static menu items) -->
+          <div id="menuLoading" class="text-center" style="display: none;">
+            <p class="label-1">Loading menu items...</p>
+            <button onclick="loadAllMenuItems()" class="btn btn-primary" style="margin-top: 10px;">
+              Force Load Menu
+            </button>
+            <button onclick="testMenuAPI()" class="btn btn-secondary" style="margin-top: 10px; margin-left: 10px;">
+              Test API
+            </button>
+          </div>
+
+          <!-- Menu items will be loaded here dynamically -->
+          <ul class="grid-list" id="menuItemsList">
+            <!-- Static menu items for immediate display -->
+            <li>
+              <div class="menu-card hover:card" data-menu-id="28" onclick="showMenuItemDetails(28)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-1.png" width="100" height="100" loading="lazy" alt="Caesar Salad" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Caesar Salad</a>
+                    </h3>
+                    <span class="span title-2">₹22.00</span>
+                  </div>
+                  <p class="card-text label-1">Romaine lettuce with parmesan and croutons</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="30" onclick="showMenuItemDetails(30)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-2.png" width="100" height="100" loading="lazy" alt="Chicken Wings" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Chicken Wings</a>
+                    </h3>
+                    <span class="span title-2">₹18.00</span>
+                  </div>
+                  <p class="card-text label-1">Crispy chicken wings with your choice of sauce</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="31" onclick="showMenuItemDetails(31)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-3.png" width="100" height="100" loading="lazy" alt="Lasagne" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Lasagne</a>
+                    </h3>
+                    <span class="span title-2">₹25.00</span>
+                  </div>
+                  <p class="card-text label-1">Layered pasta with meat sauce and cheese</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="32" onclick="showMenuItemDetails(32)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-4.png" width="100" height="100" loading="lazy" alt="Tokusen Wagyu" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Tokusen Wagyu</a>
+                    </h3>
+                    <span class="span title-2">₹45.00</span>
+                  </div>
+                  <p class="card-text label-1">Premium wagyu beef with special seasoning</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="33" onclick="showMenuItemDetails(33)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-5.png" width="100" height="100" loading="lazy" alt="Opu Fish" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Opu Fish</a>
+                    </h3>
+                    <span class="span title-2">₹28.00</span>
+                  </div>
+                  <p class="card-text label-1">Fresh fish with herbs and lemon</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="34" onclick="showMenuItemDetails(34)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-6.png" width="100" height="100" loading="lazy" alt="Grilled Salmon" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Grilled Salmon</a>
+                    </h3>
+                    <span class="span title-2">₹32.00</span>
+                  </div>
+                  <p class="card-text label-1">Perfectly grilled salmon with vegetables</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="35" onclick="showMenuItemDetails(35)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-7.png" width="100" height="100" loading="lazy" alt="Beef Steak" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Beef Steak</a>
+                    </h3>
+                    <span class="span title-2">₹38.00</span>
+                  </div>
+                  <p class="card-text label-1">Tender beef steak cooked to perfection</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="36" onclick="showMenuItemDetails(36)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-8.png" width="100" height="100" loading="lazy" alt="Chicken Parmesan" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Chicken Parmesan</a>
+                    </h3>
+                    <span class="span title-2">₹26.00</span>
+                  </div>
+                  <p class="card-text label-1">Breaded chicken with marinara and cheese</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="41" onclick="showMenuItemDetails(41)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-1.png" width="100" height="100" loading="lazy" alt="Chocolate Lava Cake" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Chocolate Lava Cake</a>
+                    </h3>
+                    <span class="span title-2">₹12.00</span>
+                  </div>
+                  <p class="card-text label-1">Warm chocolate cake with molten center</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="42" onclick="showMenuItemDetails(42)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-2.png" width="100" height="100" loading="lazy" alt="Tiramisu" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Tiramisu</a>
+                    </h3>
+                    <span class="span title-2">₹14.00</span>
+                  </div>
+                  <p class="card-text label-1">Classic Italian dessert with coffee and mascarpone</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="45" onclick="showMenuItemDetails(45)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-3.png" width="100" height="100" loading="lazy" alt="Fresh Orange Juice" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Fresh Orange Juice</a>
+                    </h3>
+                    <span class="span title-2">₹6.00</span>
+                  </div>
+                  <p class="card-text label-1">Freshly squeezed orange juice</p>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card" data-menu-id="46" onclick="showMenuItemDetails(46)">
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="assets/images/menu-4.png" width="100" height="100" loading="lazy" alt="Iced Coffee" class="img-cover">
+                </figure>
+                <div>
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Iced Coffee</a>
+                    </h3>
+                    <span class="span title-2">₹8.00</span>
+                  </div>
+                  <p class="card-text label-1">Refreshing iced coffee with ice cream</p>
+                </div>
+              </div>
+            </li>
+
+            <!-- Dynamic content will be inserted here -->
+          </ul>
+
+          <p class="menu-text text-center">
+            During winter daily from <span class="span">7:00 pm</span> to <span class="span">9:00 pm</span>
+          </p>
+
+          <a href="#" class="btn btn-primary">
+            <span class="text text-1">View All Menu</span>
+
+            <span class="text text-2" aria-hidden="true">View All Menu</span>
+          </a>
+
+          <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape"
+            class="shape shape-2 move-anim">
+          <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape"
+            class="shape shape-3 move-anim">
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #TESTIMONIALS
+      -->
+
+      <section class="section testi text-center has-bg-image"
+        style="background-image: url('./assets/images/testimonial-bg.jpg')" aria-label="testimonials">
+        <div class="container">
+
+          <div class="quote">”</div>
+
+          <p class="headline-2 testi-text">
+            I wanted to thank you for inviting me down for that amazing dinner the other night. The food was
+            extraordinary.
+          </p>
+
+          <div class="wrapper">
+            <div class="separator"></div>
+            <div class="separator"></div>
+            <div class="separator"></div>
+          </div>
+
+          <div class="profile">
+            <img src="./assets/images/testi-avatar.jpg" width="100" height="100" loading="lazy" alt="Sam Jhonson"
+              class="img">
+
+            <p class="label-2 profile-name">Sam Jhonson</p>
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+      <!-- 
+        - #FEEDBACK
+      -->
+
+
+
+
+
+
+      <!-- 
+        - #RESERVATION
+      -->
+
+      <section class="reservation">
+        <div class="container">
+
+          <div class="form reservation-form bg-black-10">
+
+            <form id="reservationForm" class="form-left">
+
+              <h2 class="headline-1 text-center">Online Reservation</h2>
+
+              <p class="form-text text-center">
+                Booking request <a href="tel:+88123123456" class="link">+88-123-123456</a>
+                or fill out the order form
+              </p>
+
+              <div class="input-wrapper">
+                <input type="text" name="name" id="reservationName" placeholder="Your Name" autocomplete="off" class="input-field" required minlength="2">
+
+                <input type="email" name="email" id="reservationEmail" placeholder="Email Address" autocomplete="off" class="input-field" required>
+              </div>
+
+              <div class="input-wrapper">
+                <input type="tel" name="phone" id="reservationPhone" placeholder="Phone Number" autocomplete="off" class="input-field" required pattern="[0-9]{10,15}">
+
+                <div class="icon-wrapper">
+                  <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+
+                  <select name="partySize" id="reservationPartySize" class="input-field" required>
+                    <option value="">Select Party Size</option>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 People</option>
+                    <option value="3">3 People</option>
+                    <option value="4">4 People</option>
+                    <option value="5">5 People</option>
+                    <option value="6">6 People</option>
+                    <option value="7">7 People</option>
+                    <option value="8">8 People</option>
+                    <option value="9">9 People</option>
+                    <option value="10">10 People</option>
+                  </select>
+
+                  <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+                </div>
+              </div>
+
+              <div class="input-wrapper">
+                <div class="icon-wrapper">
+                  <ion-icon name="calendar-clear-outline" aria-hidden="true"></ion-icon>
+
+                  <input type="date" name="date" id="reservationDate" class="input-field" required min="2024-01-01">
+
+                  <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+                </div>
+
+                <div class="icon-wrapper">
+                  <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+
+                  <select name="time" id="reservationTime" class="input-field" required>
+                    <option value="">Select Time</option>
+                    <option value="08:00">08:00 AM</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                    <option value="18:00">06:00 PM</option>
+                    <option value="19:00">07:00 PM</option>
+                    <option value="20:00">08:00 PM</option>
+                    <option value="21:00">09:00 PM</option>
+                    <option value="22:00">10:00 PM</option>
+                  </select>
+
+                  <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+                </div>
+              </div>
+
+              <textarea name="specialRequests" id="reservationSpecialRequests" placeholder="Special Requests (Optional)" autocomplete="off" class="input-field"></textarea>
+
+              <button type="submit" class="btn btn-secondary">
+                <span class="text text-1">Book A Table</span>
+
+                <span class="text text-2" aria-hidden="true">Book A Table</span>
+              </button>
+
+            </form>
+
+            <div class="form-right text-center" style="background-image: url('./assets/images/form-pattern.png')">
+
+              <h2 class="headline-1 text-center">Contact Us</h2>
+
+              <p class="contact-label">Booking Request</p>
+
+              <a href="tel:+88123123456" class="body-1 contact-number hover-underline">+88-123-123456</a>
+
+              <div class="separator"></div>
+
+              <p class="contact-label">Location</p>
+
+              <address class="body-4">
+                Restaurant St, Delicious City, <br>
+                London 9578, UK
+              </address>
+
+              <p class="contact-label">Lunch Time</p>
+
+              <p class="body-4">
+                Monday to Sunday <br>
+                11.00 am - 2.30pm
+              </p>
+
+              <p class="contact-label">Dinner Time</p>
+
+              <p class="body-4">
+                Monday to Sunday <br>
+                05.00 pm - 10.00pm
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #FEATURES
+      -->
+
+      <section class="section features text-center" aria-label="features">
+        <div class="container">
+
+          <p class="section-subtitle label-2">Why Choose Us</p>
+
+          <h2 class="headline-1 section-title">Our Strength</h2>
+
+          <ul class="grid-list">
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-1.png" width="100" height="80" loading="lazy" alt="icon">
+                </div>
+
+                <h3 class="title-2 card-title">Hygienic Food</h3>
+
+                <p class="label-1 card-text">Lorem Ipsum is simply dummy printing and typesetting.</p>
+
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-2.png" width="100" height="80" loading="lazy" alt="icon">
+                </div>
+
+                <h3 class="title-2 card-title">Fresh Environment</h3>
+
+                <p class="label-1 card-text">Lorem Ipsum is simply dummy printing and typesetting.</p>
+
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-3.png" width="100" height="80" loading="lazy" alt="icon">
+                </div>
+
+                <h3 class="title-2 card-title">Skilled Chefs</h3>
+
+                <p class="label-1 card-text">Lorem Ipsum is simply dummy printing and typesetting.</p>
+
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-4.png" width="100" height="80" loading="lazy" alt="icon">
+                </div>
+
+                <h3 class="title-2 card-title">Event & Party</h3>
+
+                <p class="label-1 card-text">Lorem Ipsum is simply dummy printing and typesetting.</p>
+
+              </div>
+            </li>
+
+          </ul>
+
+          <img src="./assets/images/shape-7.png" width="208" height="178" loading="lazy" alt="shape"
+            class="shape shape-1">
+
+          <img src="./assets/images/shape-8.png" width="120" height="115" loading="lazy" alt="shape"
+            class="shape shape-2">
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #BLOG
+      -->
+
+      <section class="section blog bg-black-10" aria-label="blog" id="blog">
+        <div class="container">
+
+          <p class="section-subtitle label-2 text-center">Fresh Stories</p>
+
+          <h2 class="section-title headline-1 text-center">From Our Kitchen</h2>
+          
+          <p class="section-text text-center">
+            Discover culinary secrets, chef tips, and the stories behind our signature dishes
+          </p>
+
+          <ul class="grid-list blog-grid">
+
+            <li>
+              <div class="blog-card has-before hover:shine" data-blog-id="1">
+
+                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
+                  <img src="./assets/images/event-1.jpg" width="350" height="450" loading="lazy"
+                    alt="The Secret Behind Perfect Pasta" class="img-cover">
+
+                  <time class="publish-date label-2" datetime="2025-09-08">08/09/2025</time>
+                  
+                  <div class="blog-category">Recipes</div>
+                </div>
+
+                <div class="card-content">
+                  <div class="blog-meta">
+                    <span class="author">Chef Marco</span>
+                    <span class="read-time">5 min read</span>
+                  </div>
+
+                  <h3 class="card-title title-2">
+                    <a href="#" class="blog-link">The Secret Behind Perfect Pasta: A Chef's Guide</a>
+                  </h3>
+                  
+                  <p class="card-text body-3">
+                    Discover the traditional techniques and secret ingredients that make our pasta dishes extraordinary. From selecting the right flour to mastering the perfect al dente texture.
+                  </p>
+                  
+                  <div class="card-actions">
+                    <a href="#" class="read-more-btn">Read More</a>
+                    <div class="blog-stats">
+                      <span class="likes">❤️ 24</span>
+                      <span class="comments">💬 8</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card has-before hover:shine" data-blog-id="2">
+
+                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
+                  <img src="./assets/images/event-2.jpg" width="350" height="450" loading="lazy"
+                    alt="Farm to Table: Our Sustainability Journey" class="img-cover">
+
+                  <time class="publish-date label-2" datetime="2025-09-05">05/09/2025</time>
+                  
+                  <div class="blog-category">Sustainability</div>
+                </div>
+
+                <div class="card-content">
+                  <div class="blog-meta">
+                    <span class="author">Chef Sarah</span>
+                    <span class="read-time">7 min read</span>
+                  </div>
+
+                  <h3 class="card-title title-2">
+                    <a href="#" class="blog-link">Farm to Table: Our Sustainability Journey</a>
+                  </h3>
+                  
+                  <p class="card-text body-3">
+                    Learn about our commitment to sustainable dining, local sourcing, and how we partner with organic farms to bring you the freshest ingredients while caring for our planet.
+                  </p>
+                  
+                  <div class="card-actions">
+                    <a href="#" class="read-more-btn">Read More</a>
+                    <div class="blog-stats">
+                      <span class="likes">❤️ 31</span>
+                      <span class="comments">💬 12</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card has-before hover:shine" data-blog-id="3">
+
+                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
+                  <img src="./assets/images/event-3.jpg" width="350" height="450" loading="lazy"
+                    alt="Wine Pairing Mastery: Elevate Your Dining" class="img-cover">
+
+                  <time class="publish-date label-2" datetime="2025-09-02">02/09/2025</time>
+                  
+                  <div class="blog-category">Wine & Pairing</div>
+                </div>
+
+                <div class="card-content">
+                  <div class="blog-meta">
+                    <span class="author">Sommelier James</span>
+                    <span class="read-time">6 min read</span>
+                  </div>
+
+                  <h3 class="card-title title-2">
+                    <a href="#" class="blog-link">Wine Pairing Mastery: Elevate Your Dining Experience</a>
+                  </h3>
+                  
+                  <p class="card-text body-3">
+                    Unlock the secrets of perfect wine and food pairing. Our expert sommelier shares professional tips to enhance flavors and create memorable dining moments.
+                  </p>
+                  
+                  <div class="card-actions">
+                    <a href="#" class="read-more-btn">Read More</a>
+                    <div class="blog-stats">
+                      <span class="likes">❤️ 18</span>
+                      <span class="comments">💬 5</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          <!-- Blog Categories Filter -->
+          <div class="blog-filters">
+            <h3 class="filter-title">Explore by Category</h3>
+            <div class="filter-buttons">
+              <button class="filter-btn active" data-filter="all">All Stories</button>
+              <button class="filter-btn" data-filter="recipes">Recipes</button>
+              <button class="filter-btn" data-filter="sustainability">Sustainability</button>
+              <button class="filter-btn" data-filter="wine">Wine & Pairing</button>
+              <button class="filter-btn" data-filter="chef-tips">Chef Tips</button>
+            </div>
+          </div>
+
+          <!-- Blog Actions -->
+          <div class="blog-actions">
+            <a href="blog.html" class="btn btn-primary">
+              <span class="text text-1">View All Posts</span>
+              <span class="text text-2" aria-hidden="true">View All Posts</span>
+            </a>
+            
+            <div class="blog-search">
+              <input type="text" placeholder="Search blog posts..." class="blog-search-input" id="blogSearch">
+              <button class="search-btn" type="button">
+                <ion-icon name="search-outline"></ion-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Newsletter Signup -->
+          <div class="newsletter-section">
+            <div class="newsletter-content">
+              <h3 class="newsletter-title">Never Miss a Recipe</h3>
+              <p class="newsletter-text">Get our latest culinary stories and exclusive recipes delivered to your inbox</p>
+              
+              <form class="newsletter-form" id="newsletterForm">
+                <div class="input-group">
+                  <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+                  <button type="submit" class="btn btn-secondary">
+                    <span class="text">Subscribe</span>
+                    <ion-icon name="paper-plane-outline"></ion-icon>
+                  </button>
+                </div>
+                <div class="newsletter-benefits">
+                  <span class="benefit">✓ Weekly recipes</span>
+                  <span class="benefit">✓ Chef secrets</span>
+                  <span class="benefit">✓ Special offers</span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+
+  <!-- Login/Registration Modal -->
+  <div class="modal" id="loginModal" style="display: none;">
+    <div class="modal-content login-modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Welcome to Grilli</h2>
+        <button class="close-modal" onclick="closeLoginModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form active" style="display: block;">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary auth-btn">
+            <ion-icon name="log-in-outline"></ion-icon>
+            Sign In
+          </button>
+          
+          <div class="secure-login">
+            <span>Secure Login</span>
+          </div>
+          
+          <div class="auth-switch">
+            <p>Don't have an account? <a href="#" onclick="switchToRegister()">Create Account</a></p>
+          </div>
+        </form>
+        
+        <!-- Registration Form -->
+        <form id="registerForm" class="auth-form" style="display: none;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regFirstName">First Name</label>
+              <input type="text" id="regFirstName" name="firstName" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="regLastName">Last Name</label>
+              <input type="text" id="regLastName" name="lastName" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="regEmail">Email Address</label>
+            <input type="email" id="regEmail" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input type="password" id="regPassword" name="password" required minlength="6">
+            <small class="form-help">Minimum 6 characters</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="regPhone">Phone Number (Optional)</label>
+            <input type="tel" id="regPhone" name="phone">
+          </div>
+          
+          <div class="form-group">
+            <label for="regAddress">Address (Optional)</label>
+            <textarea id="regAddress" name="address" rows="3" placeholder="Enter your delivery address"></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary auth-btn">
+            <ion-icon name="person-add-outline"></ion-icon>
+            Create Account
+          </button>
+          
+          <div class="auth-switch">
+            <p>Already have an account? <a href="#" onclick="switchToLogin()">Sign In</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reservation Confirmation Modal -->
+  <div class="modal" id="reservationConfirmationModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Reservation Confirmed!</h3>
+        <button class="close-modal" onclick="closeReservationConfirmation()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="confirmation-details">
+          <p><strong>Reservation ID:</strong> <span id="reservationId"></span></p>
+          <p><strong>Name:</strong> <span id="reservationConfirmName"></span></p>
+          <p><strong>Date:</strong> <span id="reservationConfirmDate"></span></p>
+          <p><strong>Time:</strong> <span id="reservationConfirmTime"></span></p>
+          <p><strong>Party Size:</strong> <span id="reservationConfirmPartySize"></span></p>
+          <p><strong>Status:</strong> <span class="status-pending">Pending Confirmation</span></p>
+        </div>
+        <p class="confirmation-message">
+          Thank you for your reservation! We will contact you soon to confirm your table booking.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeReservationConfirmation()">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer section has-bg-image text-center"
+    style="background-image: url('./assets/images/footer-bg.jpg')">
+    <div class="container">
+
+      <div class="footer-top grid-list">
+
+        <div class="footer-brand has-before has-after">
+
+          <a href="#" class="logo">
+            <img src="./assets/images/logo.svg" width="160" height="50" loading="lazy" alt="grilli home">
+          </a>
+
+          <address class="body-4">
+            Restaurant St, Delicious City, London 9578, UK
+          </address>
+
+          <a href="mailto:booking@grilli.com" class="body-4 contact-link">booking@grilli.com</a>
+
+          <a href="tel:+88123123456" class="body-4 contact-link">Booking Request : +88-123-123456</a>
+
+          <p class="body-4">
+            Open : 09:00 am - 01:00 pm
+          </p>
+
+          <div class="wrapper">
+            <div class="separator"></div>
+            <div class="separator"></div>
+            <div class="separator"></div>
+          </div>
+
+          <p class="title-1">Get News & Offers</p>
+
+          <p class="label-1">
+            Subscribe us & Get <span class="span">25% Off.</span>
+          </p>
+
+          <form action="" class="input-wrapper">
+            <div class="icon-wrapper">
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+
+              <input type="email" name="email_address" placeholder="Your email" autocomplete="off" class="input-field">
+            </div>
+
+            <button type="submit" class="btn btn-secondary">
+              <span class="text text-1">Subscribe</span>
+
+              <span class="text text-2" aria-hidden="true">Subscribe</span>
+            </button>
+          </form>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Home</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Menus</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">About Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Our Chefs</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Contact</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Facebook</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Instagram</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Twitter</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Youtube</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Google Map</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <p class="copyright">
+          &copy; 2025 Grilli. All Rights Reserved | Crafted by <span class="link">ABUSHAHMA and group 11</span>
+        </p>
+
+      </div>
+
+    </div>
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn active" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/menu-functions.js?v=1"></script>
+  <script src="./assets/js/script.js?v=1"></script>
+  
+  <!-- Fix for duplicate function declarations -->
+  <script>
+    // Ensure functions are properly defined and remove duplicates
+    if (typeof window.handleCartClick !== 'function') {
+      window.handleCartClick = function() {
+        console.log('Cart clicked - fallback function');
+        if (window.cart && window.cart.length > 0) {
+          if (typeof showQuickOrderOptions === 'function') {
+            showQuickOrderOptions();
+          } else {
+            console.log('Quick order options not available');
+          }
+        } else {
+          console.log('Cart is empty');
+        }
+      };
+    }
+    
+    // Fix cart button element error
+    setTimeout(() => {
+      const cartBtn = document.getElementById('cartBtn');
+      if (cartBtn) {
+        console.log('Cart button found and ready');
+      } else {
+        console.log('Cart button not found, but continuing...');
+      }
+    }, 1000);
+  </script>
+  
+  <!-- Login Test Script -->
+  <script>
+    // Test login functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, testing login functionality...');
+      
+      // Test if the function exists
+      if (typeof window.showLoginModal === 'function') {
+        console.log('✅ showLoginModal function is available');
+      } else {
+        console.log('❌ showLoginModal function is NOT available');
+      }
+      
+      // Test if login button exists
+      const loginBtn = document.getElementById('loginBtn');
+      if (loginBtn) {
+        console.log('✅ Login button found');
+        
+        // Add additional click handler for testing
+        loginBtn.addEventListener('click', function(e) {
+          console.log('Login button clicked!');
+          
+          if (typeof window.showLoginModal === 'function') {
+            window.showLoginModal();
+          } else {
+            // Fallback: show modal directly
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+              modal.style.display = 'flex';
+              modal.classList.add('show');
+              document.body.style.overflow = 'hidden';
+              console.log('Modal shown via fallback method');
+            } else {
+              alert('Login modal not found!');
+            }
+          }
+        });
+        
+        // Add hover effect for better UX
+        loginBtn.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.05)';
+          this.style.backgroundColor = '#ff6b35';
+        });
+        
+        loginBtn.addEventListener('mouseleave', function() {
+          this.style.transform = 'scale(1)';
+          this.style.backgroundColor = '';
+        });
+      } else {
+        console.log('❌ Login button NOT found');
+      }
+    });
+    
+    // Fallback close function
+    window.closeLoginModal = window.closeLoginModal || function() {
+      const modal = document.getElementById('loginModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+        console.log('Modal closed via fallback method');
+      }
+    };
+    
+    // Fallback switch functions
+    window.switchToLogin = window.switchToLogin || function() {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      if (loginForm && registerForm) {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+      }
+    };
+    
+    window.switchToRegister = window.switchToRegister || function() {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      if (loginForm && registerForm) {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+      }
+    };
+  </script>
+  
+  <!-- Debug Script -->
+  <script>
+    // Debug function to test menu functionality
+    window.debugMenu = function() {
+      console.log('Debug: Testing menu functionality...');
+      
+      // Test if functions exist
+      console.log('showMenuItemDetails function exists:', typeof window.showMenuItemDetails);
+      console.log('closeMenuItemModal function exists:', typeof window.closeMenuItemModal);
+      console.log('addToCartFromModal function exists:', typeof window.addToCartFromModal);
+      
+      // Test if modal elements exist
+      const modal = document.getElementById('menuItemModal');
+      console.log('Menu modal exists:', !!modal);
+      
+      if (modal) {
+        console.log('Modal display style:', modal.style.display);
+        console.log('Modal computed display:', window.getComputedStyle(modal).display);
+      }
+      
+      // API test removed - using actual menu data
+    };
+    
+    // Run debug on page load
+    window.addEventListener('load', function() {
+      console.log('Page loaded, running debug...');
+      setTimeout(debugMenu, 1000);
+    });
+  </script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // Final safety: ensure no invisible overlay blocks clicks after load
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        try {
+          var overlay = document.querySelector('[data-overlay]');
+          if (overlay) { overlay.classList.remove('active'); overlay.style.pointerEvents = 'none'; }
+          document.body.classList.remove('nav-active');
+          var pre = document.querySelector('[data-preaload]');
+          if (pre) { pre.classList.add('loaded'); pre.remove(); }
+        } catch (e) {}
+      }, 800);
+    });
+  </script>
+
+  <!-- Menu Item Details Modal -->
+  <div id="menuItemModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeMenuItemModal()">&times;</span>
+      <div class="modal-body">
+        <div class="item-details-container">
+          <div class="item-image-section">
+            <img id="modalItemImage" src="" alt="" class="item-large-image">
+          </div>
+          <div class="item-info-section">
+            <h2 id="modalItemName" class="item-name"></h2>
+            <div class="item-meta">
+              <span id="modalItemCategory" class="item-category"></span>
+              <span id="modalItemPrice" class="item-price"></span>
+            </div>
+            <p id="modalItemDescription" class="item-description"></p>
+            <div class="item-details-grid">
+              <div class="detail-item">
+                <span class="detail-label">Preparation Time:</span>
+                <span id="modalItemPrepTime" class="detail-value"></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Spice Level:</span>
+                <span id="modalItemSpiceLevel" class="detail-value"></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Vegetarian:</span>
+                <span id="modalItemVegetarian" class="detail-value"></span>
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" onclick="showOrderForm()">
+                <ion-icon name="restaurant-outline"></ion-icon>
+                Place Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Form Modal -->
+  <div id="orderFormModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeOrderFormModal()">&times;</span>
+      <div class="modal-body">
+        <div class="order-form-container">
+          <h2 class="order-form-title">Place Your Order</h2>
+          
+          <div class="order-item-summary">
+            <div class="order-item-info">
+              <img id="orderItemImage" src="" alt="" class="order-item-image">
+              <div class="order-item-details">
+                <h3 id="orderItemName" class="order-item-name"></h3>
+                <p id="orderItemDescription" class="order-item-description"></p>
+                <span id="orderItemPrice" class="order-item-price"></span>
+              </div>
+            </div>
+          </div>
+
+          <form id="orderForm" class="order-form">
+            <div class="form-group">
+              <label for="customerName">Your Name *</label>
+              <input type="text" id="customerName" name="customerName" required>
+            </div>
+
+            <div class="form-group">
+              <label for="customerEmail">Email Address *</label>
+              <input type="email" id="customerEmail" name="customerEmail" required>
+            </div>
+
+            <div class="form-group">
+              <label for="customerPhone">Phone Number *</label>
+              <input type="tel" id="customerPhone" name="customerPhone" required>
+            </div>
+
+            <div class="form-group">
+              <label for="deliveryAddress">Table Number *</label>
+              <input type="text" id="deliveryAddress" name="deliveryAddress" required placeholder="Enter your table number">
+            </div>
+
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <select id="quantity" name="quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="paymentMethod">Payment Method *</label>
+              <select id="paymentMethod" name="paymentMethod" required>
+                <option value="cash_on_delivery">Cash on Delivery</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="qr_code">QR Code</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="specialInstructions">Special Instructions</label>
+              <textarea id="specialInstructions" name="specialInstructions" rows="2" placeholder="Any special requests or instructions"></textarea>
+            </div>
+
+            <div class="order-total">
+              <div class="total-line">
+                <span>Item Price:</span>
+                <span id="itemPriceDisplay">$0.00</span>
+              </div>
+              <div class="total-line">
+                <span>Quantity:</span>
+                <span id="quantityDisplay">1</span>
+              </div>
+              <div class="total-line total-amount">
+                <span>Total Amount:</span>
+                <span id="totalAmountDisplay">$0.00</span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="closeOrderFormModal()">Cancel</button>
+              <button type="submit" class="btn btn-primary">
+                <ion-icon name="checkmark-outline"></ion-icon>
+                Place Order
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Confirmation Modal -->
+  <div id="orderConfirmationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="confirmation-container">
+          <div class="success-icon">
+            <ion-icon name="checkmark-circle"></ion-icon>
+          </div>
+          <h2 class="confirmation-title">Order Placed Successfully!</h2>
+          <p class="confirmation-message">Your order has been placed and will be prepared shortly.</p>
+          <div class="order-details">
+            <p><strong>Order Number:</strong> <span id="orderNumber"></span></p>
+            <p><strong>Item:</strong> <span id="confirmedItemName"></span></p>
+            <p><strong>Total Amount:</strong> <span id="confirmedTotalAmount"></span></p>
+            <p><strong>Estimated Time:</strong> <span id="estimatedTime"></span></p>
+          </div>
+          <div class="confirmation-actions">
+            <button class="btn btn-primary" onclick="closeOrderConfirmationModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 0;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      z-index: 1001;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+    }
+
+    .modal-body {
+      padding: 0;
+    }
+
+    .item-details-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-image-section {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .item-large-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .item-info-section {
+      padding: 30px;
+    }
+
+    .item-name {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .item-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .item-category {
+      background: #ff6b35;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .item-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ff6b35;
+    }
+
+    .item-description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .item-details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .detail-value {
+      color: #666;
+      font-weight: 500;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .modal-actions .btn {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Order Form Styles */
+    .order-form-container {
+      padding: 30px;
+    }
+
+    .order-form-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .order-item-summary {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .order-item-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .order-item-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .order-item-details h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .order-item-description {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .order-item-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ff6b35;
+    }
+
+    .order-form {
+      display: grid;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 12px 16px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #ff6b35;
+    }
+
+    .order-total {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .total-line.total-amount {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ff6b35;
+      border-top: 2px solid #e1e5e9;
+      padding-top: 10px;
+      margin-top: 15px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    .form-actions .btn {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    /* Order Confirmation Styles */
+    .confirmation-container {
+      text-align: center;
+      padding: 40px 30px;
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 15px;
+    }
+
+    .confirmation-message {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .order-details {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .order-details p {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .order-details strong {
+      color: #333;
+    }
+
+    .confirmation-actions {
+      display: flex;
+      justify-content: center;
+    }
+
+    
+    /* Menu Filter Styles */
+    .menu-filter {
+      margin-bottom: 2rem;
+    }
+    
+    .filter-buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .filter-btn {
+      background: transparent;
+      border: 2px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      padding: 0.6rem 1.8rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      min-width: 120px;
+    }
+    
+    .filter-btn:hover {
+      background: var(--gold-crayola);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+    
+    .filter-btn.active {
+      background: var(--gold-crayola);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+      .filter-buttons-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .filter-btn {
+        width: 200px;
+        margin: 0.25rem 0;
+      }
+    }
+    
+    /* Menu item badges */
+    .menu-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    
+    .badge-veg { background: #4CAF50; color: white; }
+    .badge-nonveg { background: #f44336; color: white; }
+    .badge-new { background: #2196F3; color: white; }
+    .badge-hot { background: #FF9800; color: white; }
+    .badge-seasonal { background: #9C27B0; color: white; }
+
+    /* Cart Button Styles */
+    .cart-btn {
+      background: linear-gradient(135deg, #ff5722, #ff9800);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+      margin-right: 15px;
+      position: relative;
+    }
+
+    .cart-btn:hover {
+      background: linear-gradient(135deg, #e64a19, #f57c00);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 87, 34, 0.4);
+    }
+
+    .cart-btn ion-icon {
+      font-size: 1.2rem;
+    }
+
+    .cart-count {
+      background: #f44336;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 20px;
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      display: none;
+    }
+
+    .cart-count.show {
+      display: flex;
+    }
+
+    /* Login Button Styles */
+    .login-btn {
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+      margin-right: 15px;
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(135deg, #e55a2b, #e8840a);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+    }
+
+    .login-btn ion-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Auth Message Styles */
+    .auth-message {
+      padding: 12px 16px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      animation: slideIn 0.3s ease;
+    }
+
+    .auth-message.error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
+
+    .auth-message.success {
+      background: #e8f5e8;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+
+    .auth-message.info {
+      background: #e3f2fd;
+      color: #1565c0;
+      border: 1px solid #bbdefb;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-text {
+      font-size: 0.9rem;
+    }
+
+    /* User Profile Button (when logged in) */
+    .user-profile-btn {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+      margin-right: 15px;
+    }
+
+    .user-profile-btn:hover {
+      background: linear-gradient(135deg, #218838, #1ea085);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    }
+
+    /* Login Modal Styles */
+    #loginModal {
+      display: none !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    #loginModal.show {
+      display: flex !important;
+    }
+    
+    .login-modal-content {
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 0.3s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      color: white;
+      padding: 25px 30px;
+      border-radius: 20px 20px 0 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    /* Auth Form Styles */
+    .auth-form {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f8f9fa;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #ff6b35;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-help {
+      color: #6c757d;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .auth-btn:hover {
+      background: linear-gradient(135deg, #e55a2b, #e8840a);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+    }
+
+    .auth-btn:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .auth-switch {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e1e5e9;
+    }
+
+    .auth-switch p {
+      margin: 0;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .auth-switch a {
+      color: #ff6b35;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .auth-switch a:hover {
+      color: #e55a2b;
+      text-decoration: underline;
+    }
+
+    /* Loading Spinner */
+    .auth-btn .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Error/Success Messages */
+    .auth-message {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .auth-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .auth-message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .login-modal-content {
+        width: 95%;
+        margin: 20px;
+      }
+      
+      .modal-body {
+        padding: 20px;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .login-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+      
+      .login-text {
+        display: none;
+      }
+    }
+
+
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 400px;
+      height: 100vh;
+      background: white;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .cart-sidebar.active {
+      transform: translateX(0);
+    }
+
+    .cart-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .cart-overlay.active {
+      display: block;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item-image {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 15px;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .cart-item-price {
+      color: #ff6b35;
+      font-weight: 600;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quantity-btn {
+      background: #f0f0f0;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quantity-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .quantity-display {
+      min-width: 30px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .remove-item {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .remove-item:hover {
+      background: #cc3333;
+    }
+
+    .cart-footer {
+      border-top: 1px solid #eee;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+
+    .cart-total {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Reservation Confirmation Modal */
+    .confirmation-details {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .confirmation-details p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    .status-pending {
+      color: #ff6b35;
+      font-weight: bold;
+    }
+
+    .confirmation-message {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      margin: 20px 0;
+    }
+
+    .cart-sidebar-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      background: #f8f9fa;
+    }
+
+    .cart-header h3 {
+      margin: 0;
+      color: #333;
+    }
+
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item-image {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-details h4 {
+      margin: 0 0 5px 0;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .cart-item-details p {
+      margin: 0 0 10px 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-controls button {
+      background: #ff6b35;
+      color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .quantity-controls span {
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .cart-item-total {
+      font-weight: bold;
+      color: #ff6b35;
+      font-size: 1.1rem;
+    }
+
+    .remove-item {
+      background: #ff4444;
+      color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .cart-footer {
+      padding: 20px;
+      border-top: 1px solid #eee;
+      background: #f8f9fa;
+    }
+
+    .cart-total {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: #ff6b35;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .checkout-btn:hover:not(:disabled) {
+      background: #e55a2b;
+    }
+
+    .checkout-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+    }
+
+    .empty-cart p {
+      margin: 10px 0;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 95%;
+        margin: 10px;
+      }
+      
+      .item-info-section {
+        padding: 20px;
+      }
+      
+      .item-name {
+        font-size: 2rem;
+      }
+      
+      .item-details-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .item-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+
+</body>
+
+</html>

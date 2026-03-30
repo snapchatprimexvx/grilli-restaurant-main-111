@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Test - Grilli Restaurant</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #1a1a1a; 
+            color: white; 
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .test-button {
+            background: #d4af37;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .test-result {
+            background: #444;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .category-test {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            background: #555;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+        .category-test.active {
+            background: #d4af37;
+            color: black;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .menu-item {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #555;
+        }
+        .menu-item h4 {
+            color: #d4af37;
+            margin: 0 0 10px 0;
+        }
+        .menu-item .price {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🍽️ Grilli Restaurant - Menu Test</h1>
+        
+        <div>
+            <button class="test-button" onclick="testAPIConnection()">🔌 Test API Connection</button>
+            <button class="test-button" onclick="loadMenuFromAPI()">📋 Load Menu from API</button>
+            <button class="test-button" onclick="displayCategories()">📂 Show Categories</button>
+            <button class="test-button" onclick="testMenuDisplay()">🖼️ Test Menu Display</button>
+        </div>
+        
+        <div id="testResults" class="test-result">
+            Click buttons above to test menu functionality...
+        </div>
+        
+        <div id="categoryTabs" style="margin: 20px 0;"></div>
+        <div id="menuDisplay" class="menu-grid"></div>
+    </div>
+
+    <script src="assets/js/api.js"></script>
+    <script>
+        let currentMenuData = null;
+        
+        async function testAPIConnection() {
+            const resultDiv = document.getElementById('testResults');
+            try {
+                resultDiv.innerHTML = 'Testing API connection...';
+                const healthy = await grilliAPI.checkHealth();
+                resultDiv.innerHTML = `✅ API Health Check: ${healthy ? 'SUCCESS' : 'FAILED'}`;
+            } catch (error) {
+                resultDiv.innerHTML = `❌ API Connection Error: ${error.message}`;
+            }
+        }
+        
+        async function loadMenuFromAPI() {
+            const resultDiv = document.getElementById('testResults');
+            try {
+                resultDiv.innerHTML = 'Loading menu from API...';
+                const response = await grilliAPI.getMenu();
+                
+                if (response && response.success && response.menuItems) {
+                    currentMenuData = response.menuItems;
+                    resultDiv.innerHTML = `✅ Menu Loaded Successfully!
+Total Items: ${response.menuItems.length}
+
+Sample Items:
+${response.menuItems.slice(0, 3).map(item => 
+`- ${item.name} (${item.category_name}) - $${item.price}`
+).join('\\n')}
+
+Categories Found:
+${[...new Set(response.menuItems.map(item => item.category_name))].join(', ')}`;
+                } else {
+                    resultDiv.innerHTML = `❌ Invalid menu response from API`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Menu Load Error: ${error.message}`;
+            }
+        }
+        
+        function displayCategories() {
+            if (!currentMenuData) {
+                document.getElementById('testResults').innerHTML = '⚠️ Please load menu first';
+                return;
+            }
+            
+            const categories = [...new Set(currentMenuData.map(item => item.category_name))];
+            const categoryTabs = document.getElementById('categoryTabs');
+            
+            categoryTabs.innerHTML = categories.map((cat, index) => 
+                `<span class="category-test ${index === 0 ? 'active' : ''}" onclick="showCategory('${cat}')">${cat}</span>`
+            ).join('');
+            
+            // Show first category by default
+            if (categories.length > 0) {
+                showCategory(categories[0]);
+            }
+        }
+        
+        function showCategory(categoryName) {
+            if (!currentMenuData) return;
+            
+            // Update active tab
+            document.querySelectorAll('.category-test').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent === categoryName) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Filter items by category
+            const categoryItems = currentMenuData.filter(item => item.category_name === categoryName);
+            
+            const menuDisplay = document.getElementById('menuDisplay');
+            menuDisplay.innerHTML = categoryItems.map(item => `
+                <div class="menu-item">
+                    <h4>${item.name}</h4>
+                    <p>${item.description}</p>
+                    <div class="price">$${parseFloat(item.price).toFixed(2)}</div>
+                    <small>Prep time: ${item.preparation_time} mins</small>
+                </div>
+            `).join('');
+            
+            document.getElementById('testResults').innerHTML = `Showing ${categoryItems.length} items from "${categoryName}" category`;
+        }
+        
+        function testMenuDisplay() {
+            loadMenuFromAPI().then(() => {
+                setTimeout(() => {
+                    displayCategories();
+                }, 500);
+            });
+        }
+        
+        // Auto-run basic tests on page load
+        window.onload = () => {
+            setTimeout(() => {
+                testAPIConnection();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

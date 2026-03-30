@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-btn { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .test-btn:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Modal Display Test</h1>
+    
+    <button class="test-btn" onclick="testModalHidden()">Test Modal Hidden</button>
+    <button class="test-btn" onclick="testModalShow()">Test Modal Show</button>
+    <button class="test-btn" onclick="testModalHide()">Test Modal Hide</button>
+    
+    <div id="result"></div>
+
+    <!-- Test Modal -->
+    <div class="modal" id="testModal" style="display: none;">
+        <div style="background: white; padding: 20px; border-radius: 8px; max-width: 400px;">
+            <h3>Test Modal</h3>
+            <p>This is a test modal to verify display functionality.</p>
+            <button onclick="testModalHide()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+
+        function testModalHidden() {
+            const modal = document.getElementById('testModal');
+            const isHidden = modal.style.display === 'none';
+            showResult(isHidden ? '✅ Modal is hidden correctly' : '❌ Modal is not hidden', isHidden ? 'success' : 'error');
+        }
+
+        function testModalShow() {
+            const modal = document.getElementById('testModal');
+            modal.style.display = 'flex';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.background = 'rgba(0,0,0,0.5)';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '1000';
+            
+            showResult('✅ Modal shown', 'success');
+        }
+
+        function testModalHide() {
+            const modal = document.getElementById('testModal');
+            modal.style.display = 'none';
+            showResult('✅ Modal hidden', 'success');
+        }
+
+        // Test on page load
+        window.addEventListener('load', function() {
+            testModalHidden();
+        });
+    </script>
+</body>
+</html>
